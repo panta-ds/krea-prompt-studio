@@ -61,7 +61,17 @@ export default function SignupPage() {
   };
 
   const handleGoogleSignup = async () => {
-    toast.info("Cadastro com Google em desenvolvimento.");
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      });
+      if (error) throw error;
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao conectar com Google.");
+    }
   };
 
   return (
@@ -140,7 +150,9 @@ export default function SignupPage() {
 
           <div className="mt-6 relative">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
-            <div className="relative flex justify-center text-xs"><span className="px-3 bg-transparent text-muted-foreground backdrop-blur-sm">ou</span></div>
+            <div className="relative flex justify-center text-[10px] uppercase font-mono tracking-widest">
+              <span className="px-4 text-muted-foreground/40">ou</span>
+            </div>
           </div>
 
           <Button 
