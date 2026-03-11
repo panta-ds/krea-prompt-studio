@@ -49,8 +49,8 @@ const features = [
 ];
 
 const plans = [
-  { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["20 análises por mês", "Prompt JSON básico", "Biblioteca pessoal"], cta: "Começar grátis", highlight: false },
-  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Multi-idioma", "Editor avançado", "Galeria pública", "Suporte prioritário"], cta: "Assinar Pro", highlight: true },
+  { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["20 análises por mês", "Prompt JSON básico", "Biblioteca pessoal"], cta: "COMECE GRATUITAMENTE", highlight: false },
+  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Multi-idioma", "Editor avançado", "Galeria pública", "Suporte prioritário"], cta: "ACESSAR GRATUITAMENTE", highlight: true },
   { name: "Agency", price: "R$ 129", period: "/por mês", desc: "Para times e agências que produzem em escala.", features: ["Análises ilimitadas", "API de acesso direto", "Times e colaboração", "Exportação em massa", "Suporte dedicado"], cta: "Falar com a equipe", highlight: false },
 ];
 
@@ -278,44 +278,77 @@ export default function LandingPage() {
           </div>
 
           <motion.div {...fadeUp(0.5)} className="mt-20 text-center">
-            <a href="#pricing">
-              <Button variant="glass" size="lg" className="btn-traveling-glow px-10 py-7 h-auto text-lg">
-                Começar a criar agora <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/signup">
+                <Button variant="glass" size="lg" className="btn-machine-green px-12 py-7 h-auto text-lg group">
+                  COMECE GRATUITAMENTE <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              <a href="#pricing">
+                <Button variant="ghost" size="lg" className="px-8 py-7 h-auto text-lg text-muted-foreground hover:text-foreground">Ver Planos</Button>
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Cinematic Banner */}
-      <section className="py-24 container mx-auto px-6">
-        <motion.div 
-          {...fadeUp(0)}
-          className="relative rounded-[2rem] overflow-hidden aspect-[21/9] md:aspect-[25/9] glass-subtle p-8 md:p-16 flex flex-col justify-end"
-        >
-          <img 
-            src="/assets/images/cinematic_banner_main.png" 
-            alt="Exemplo Prático" 
-            className="absolute inset-0 w-full h-full object-cover opacity-60"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-          <div className="relative z-10 max-w-2xl">
-            <span className="text-primary font-mono text-xs uppercase tracking-[0.2em] mb-4 block">Exemplo na prática</span>
-            <pre className="font-heading text-xs md:text-sm font-medium text-foreground mb-4 leading-tight bg-background/40 p-4 rounded-xl backdrop-blur-sm border border-white/5">
+      {/* Practical Example */}
+      <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div {...fadeUp(0)} className="order-2 lg:order-1">
+              <div className="relative rounded-[2rem] overflow-hidden aspect-square md:aspect-[4/3] glass-subtle border border-white/10 shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=1200&h=900&fit=crop" 
+                  alt="Dashboard Preview" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-background/80 via-transparent to-transparent" />
+                <div className="absolute bottom-8 left-8 right-8 glass p-6 rounded-2xl border border-white/5 backdrop-blur-xl">
+                  <pre className="text-[10px] md:text-xs text-primary font-mono leading-tight">
 {JSON.stringify({
-  subject: "artist hands",
-  canvas: "holographic",
-  style: "hyper-realistic cinematic",
-  lighting: "volumetric",
-  detail: "extremely detailed",
-  resolution: "8k"
+  subject: "majestic mountain landscape",
+  lighting: "golden hour, volumetric rays",
+  atmosphere: "mystical, fog",
+  quality: "8k, unreal engine 5"
 }, null, 2)}
-            </pre>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Este é o resultado da nossa análise. A precisão em descrever iluminação volumétrica, texturas e atmosfera permite que você recrie exatamente o que imaginou em qualquer ferramenta de IA.
-            </p>
+                  </pre>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.2)} className="order-1 lg:order-2">
+              <span className="text-primary font-mono text-sm uppercase tracking-[0.2em] mb-4 block">Exemplo na prática</span>
+              <h2 className="font-heading text-3xl md:text-5xl font-medium text-foreground mb-8 leading-tight tracking-[-0.02em]">
+                Do olhar à perfeição em <span className="text-gradient">segundos</span>
+              </h2>
+              
+              <div className="space-y-8">
+                {[
+                  { step: "01", title: "Visão Profunda", desc: "Nossa IA 'enxerga' além dos pixels, identificando texturas, luzes e intenções artísticas ocultas." },
+                  { step: "02", title: "Estruturação JSON", desc: "Transformamos a análise em dados estruturados. Cada detalhe vira um parâmetro editável e preciso." },
+                  { step: "03", title: "Prompt Universal", desc: "O resultado é um prompt master, compatível com as melhores ferramentas de geração do mundo." },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-6">
+                    <span className="font-mono text-primary/40 text-2xl font-bold leading-none">{item.step}</span>
+                    <div>
+                      <h4 className="font-heading text-lg font-medium text-foreground mb-2">{item.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12">
+                <a href="#pricing">
+                  <Button variant="glass" className="btn-machine-green px-8 py-6 h-auto group">
+                    ACESSAR GRATUITAMENTE <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </a>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Features */}
@@ -347,7 +380,7 @@ export default function LandingPage() {
       </section>
 
       {/* Social Proof Section */}
-      <section className="py-24 bg-secondary/5">
+      <section className="py-24 bg-secondary/5 overflow-hidden">
         <div className="container mx-auto px-6 mb-16 text-center">
           <motion.div {...fadeUp(0)}>
             <div className="flex justify-center gap-1.5 mb-6">
@@ -362,32 +395,56 @@ export default function LandingPage() {
           </motion.div>
         </div>
 
-        <div className="container mx-auto px-6">
-          <div className="social-proof-grid">
-            {testimonials.map((t, i) => (
-              <motion.div 
-                key={i} 
-                {...fadeUp(i * 0.05)}
-                className="p-8 glass rounded-3xl h-full flex flex-col justify-between hover:border-primary/40 transition-all duration-500 hover:-translate-y-1"
-              >
-                <div>
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="w-3 h-3 star-yellow fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-foreground/80 leading-relaxed italic">"{t.comment}"</p>
-                </div>
-                <div className="flex items-center gap-3 mt-8">
-                  <div className="w-10 h-10 rounded-full overflow-hidden border border-border/50">
-                    <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
-                  </div>
+        <div className="social-proof-carousel-wrapper space-y-8">
+          <div className="flex gap-6 animate-social-proof-slide whitespace-nowrap">
+            {[...testimonials.slice(0, 5), ...testimonials.slice(0, 5)].map((t, i) => (
+              <div key={i} className="w-[350px] shrink-0">
+                <div className="p-8 glass rounded-3xl h-full flex flex-col justify-between hover:border-primary/40 transition-all duration-500">
                   <div>
-                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">{t.name}</h4>
-                    <span className="text-[10px] text-muted-foreground">Usuário Verificado</span>
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} className="w-3 h-3 star-yellow fill-current" />
+                      ))}
+                    </div>
+                    <p className="text-sm text-foreground/80 leading-relaxed italic whitespace-normal">"{t.comment}"</p>
+                  </div>
+                  <div className="flex items-center gap-3 mt-8">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-border/50">
+                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">{t.name}</h4>
+                      <span className="text-[10px] text-muted-foreground">Usuário Verificado</span>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex gap-6 animate-social-proof-slide-reverse whitespace-nowrap">
+            {[...testimonials.slice(5), ...testimonials.slice(5)].map((t, i) => (
+              <div key={i} className="w-[350px] shrink-0">
+                <div className="p-8 glass rounded-3xl h-full flex flex-col justify-between hover:border-primary/40 transition-all duration-500">
+                  <div>
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} className="w-3 h-3 star-yellow fill-current" />
+                      ))}
+                    </div>
+                    <p className="text-sm text-foreground/80 leading-relaxed italic whitespace-normal">"{t.comment}"</p>
+                  </div>
+                  <div className="flex items-center gap-3 mt-8">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-border/50">
+                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">{t.name}</h4>
+                      <span className="text-[10px] text-muted-foreground">Usuário Verificado</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -439,8 +496,8 @@ export default function LandingPage() {
                 <div className="mt-8">
                   <Link to="/signup">
                     <Button
-                      variant={plan.highlight ? "glass" : "outline"}
-                      className="w-full"
+                      variant="glass"
+                      className="w-full btn-machine-green py-6 h-auto"
                     >
                       {plan.cta}
                     </Button>
@@ -485,8 +542,8 @@ export default function LandingPage() {
           <motion.div {...fadeUp(0.2)} className="mt-16 text-center">
             <h3 className="font-heading text-lg font-medium text-foreground mb-6">Ainda tem dúvidas?</h3>
             <a href="#pricing">
-              <Button variant="glass" size="lg" className="btn-traveling-glow px-8 py-6 h-auto">
-                Escolher meu plano <ArrowRight className="ml-2 w-4 h-4" />
+              <Button variant="glass" size="lg" className="btn-machine-green px-8 py-6 h-auto group">
+                ACESSAR GRATUITAMENTE <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </a>
           </motion.div>

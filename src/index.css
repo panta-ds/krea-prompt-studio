@@ -163,6 +163,53 @@
   box-shadow: 0 0 30px hsl(228 100% 72% / 0.3), inset 0 0 10px hsl(228 100% 72% / 0.2);
 }
 
+.btn-machine-green {
+  background: linear-gradient(90deg, #052e16 0%, #064e3b 100%);
+  border: 1.5px solid #22c55e;
+  box-shadow: 
+    0 0 20px rgba(34, 197, 94, 0.2), 
+    inset 0 0 15px rgba(34, 197, 94, 0.4);
+  border-radius: 9999px !important;
+  color: white !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-machine-green:hover {
+  box-shadow: 
+    0 0 35px rgba(34, 197, 94, 0.5), 
+    inset 0 0 25px rgba(34, 197, 94, 0.7);
+  transform: scale(1.03) translateY(-1px);
+  border-color: #4ade80;
+}
+
+.btn-machine-green::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: none;
+}
+
+.btn-machine-green:hover::after {
+  animation: shine-beam 1.2s infinite;
+}
+
 .btn-traveling-glow {
   position: relative;
   overflow: hidden;
@@ -270,9 +317,31 @@
   animation: social-proof-slide 40s linear infinite;
 }
 
+.social-proof-carousel-wrapper {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.animate-social-proof-slide {
+  display: flex;
+  width: max-content;
+  animation: social-proof-slide 60s linear infinite;
+}
+
+.animate-social-proof-slide-reverse {
+  display: flex;
+  width: max-content;
+  animation: social-proof-slide-reverse 60s linear infinite;
+}
+
 @keyframes social-proof-slide {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+@keyframes social-proof-slide-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
 }
 
 .social-proof-grid {
