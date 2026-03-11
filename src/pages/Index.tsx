@@ -76,6 +76,30 @@ const carouselImages = [
   { url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop", prompt: "Fashion photography, elegant woman, vibrant colors, studio background, luxury aesthetic" },
 ];
 
+const carouselImages2 = [
+  { url: "/assets/images/cinematic_gallery_1_1773248641614.png", prompt: "Cinematic portrait of a cyberpunk wanderer in a neon-drenched rainy city, ultra-detailed, 8k" },
+  { url: "/assets/images/cinematic_gallery_2_1773248657144.png", prompt: "Astronaut standing on a crystal desert of a distant planet, two moons, epic scale, cinematic lighting" },
+  { url: "/assets/images/cinematic_gallery_3_1773248672002.png", prompt: "Interior of a Victorian library with magical floating books, glowing particles, warm ambient light" },
+  { url: "/assets/images/cinematic_gallery_4_1773248691187.png", prompt: "High-speed chase of a sleek futuristic car through a mountain pass at sunset, motion blur" },
+  { url: "/assets/images/cinematic_gallery_5_1773248708993.png", prompt: "Mechanical dragon made of brass and gears breathing blue fire, steampunk aesthetic" },
+  { url: "/assets/images/cinematic_gallery_6_1773248727151.png", prompt: "Samurai under a cherry blossom tree in a modern Tokyo street, contrast between tradition and tech" },
+  { url: "/assets/images/cinematic_gallery_7_1773248743498.png", prompt: "Deep sea explorer discovering an ancient sunken city with glowing bioluminescent plants" },
+  { url: "/assets/images/cinematic_gallery_8_1773248763573.png", prompt: "Cozy cabin in the woods during a heavy snowstorm, warm light, hyper-realistic" },
+];
+
+const testimonials = [
+  { name: "Ana Silva", avatar: "/assets/images/avatar_1_1773248795798.png", comment: "A precisão dos prompts JSON é assustadora. Economizo horas de trabalho!", rating: 5 },
+  { name: "Marcos Oliveira", avatar: "/assets/images/avatar_2_1773248814423.png", comment: "Melhor ferramenta para quem trabalha seriamente com Midjourney.", rating: 5 },
+  { name: "Beatriz Costa", avatar: "/assets/images/avatar_3_1773248830576.png", comment: "O editor de prompts me dá o controle que eu precisava. Incrível!", rating: 5 },
+  { name: "Ricardo Santos", avatar: "/assets/images/avatar_4_1773248846644.png", comment: "Simplesmente essencial no meu workflow diário de criação.", rating: 5 },
+  { name: "Julia Lins", avatar: "/assets/images/avatar_5_1773248861563.png", comment: "Gosto muito da biblioteca pessoal para organizar minhas ideias.", rating: 5 },
+  { name: "Thiago Mendes", avatar: "/assets/images/avatar_6_1773248884271.png", comment: "O suporte é rápido e a IA está sempre evoluindo. Recomendo!", rating: 5 },
+  { name: "Carla Souza", avatar: "/assets/images/avatar_7_1773248902734.png", comment: "A galeria da comunidade é uma fonte inesgotável de inspiração.", rating: 5 },
+  { name: "Fernando Lima", avatar: "/assets/images/avatar_8_1773248917867.png", comment: "Excelente custo-benefício para agências de publicidade.", rating: 5 },
+  { name: "Isabela Rocha", avatar: "/assets/images/avatar_1_1773248795798.png", comment: "Facilidade de uso e resultados de alta qualidade sempre.", rating: 5 },
+  { name: "Gustavo Paiva", avatar: "/assets/images/avatar_2_1773248814423.png", comment: "Transformou minha maneira de interagir com as ferramentas de IA.", rating: 5 },
+];
+
 const faqs = [
   { q: "O prompt gerado funciona em qualquer IA?", a: "Sim! O prompt JSON extrai os conceitos universais da imagem, facilitando a recriação no Midjourney, DALL-E 3, Flux, Stable Diffusion e outras ferramentas." },
   { q: "Posso testar sem pagar nada?", a: "Com certeza. O plano Free permite até 20 análises gratuitas todos os meses para você conhecer a precisão da nossa IA." },
@@ -95,8 +119,11 @@ export default function LandingPage() {
     dragFree: true
   }, [AutoScroll({ playOnInit: true, speed: 1, stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false })]);
 
-  const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
-  const scrollNext = () => emblaApi && emblaApi.scrollNext();
+  const [emblaRef2, emblaApi2] = useEmblaCarousel({ 
+    loop: true, 
+    align: "start",
+    dragFree: true
+  }, [AutoScroll({ playOnInit: true, speed: -1, stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false })]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -175,35 +202,50 @@ export default function LandingPage() {
                 Resultados reais dos nossos usuários
               </h2>
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="icon" onClick={scrollPrev} className="rounded-full">
-                <ChevronLeft className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon" onClick={scrollNext} className="rounded-full">
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
           </div>
         </div>
 
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-2">
-            {[...carouselImages, ...carouselImages].map((img, i) => (
-              <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
-                <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20">
-                  <img 
-                    src={img.url} 
-                    alt="Carousel item" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <p className="text-[10px] text-muted-foreground font-mono leading-relaxed line-clamp-3">
-                      {img.prompt}
-                    </p>
+        <div className="space-y-4">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-4">
+              {[...carouselImages, ...carouselImages].map((img, i) => (
+                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
+                  <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20 relative">
+                    <img 
+                      src={img.url} 
+                      alt="Carousel item" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-background/80 hover-slide-meta flex items-end p-6">
+                      <p className="text-xs text-foreground font-mono leading-relaxed">
+                        {img.prompt}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          <div className="overflow-hidden" ref={emblaRef2}>
+            <div className="flex gap-4">
+              {[...carouselImages2, ...carouselImages2].map((img, i) => (
+                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
+                  <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20 relative">
+                    <img 
+                      src={img.url} 
+                      alt="Carousel item" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-background/80 hover-slide-meta flex items-end p-6">
+                      <p className="text-xs text-foreground font-mono leading-relaxed">
+                        {img.prompt}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -237,6 +279,30 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Cinematic Banner */}
+      <section className="py-24 container mx-auto px-6">
+        <motion.div 
+          {...fadeUp(0)}
+          className="relative rounded-[2rem] overflow-hidden aspect-[21/9] md:aspect-[25/9] glass-subtle p-8 md:p-16 flex flex-col justify-end"
+        >
+          <img 
+            src="/assets/images/cinematic_banner_main.png" 
+            alt="Exemplo Prático" 
+            className="absolute inset-0 w-full h-full object-cover opacity-60"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+          <div className="relative z-10 max-w-2xl">
+            <span className="text-primary font-mono text-xs uppercase tracking-[0.2em] mb-4 block">Exemplo na prática</span>
+            <h3 className="font-heading text-xl md:text-3xl font-medium text-foreground mb-4 leading-tight">
+              "Hyper-realistic cinematic close-up of an artist's hands working on a holographic canvas..."
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Este é o resultado da nossa análise. A precisão em descrever iluminação volumétrica, texturas e atmosfera permite que você recrie exatamente o que imaginou em qualquer ferramenta de IA.
+            </p>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Features */}
       <section id="features" className="py-24 md:py-32 section-divider-shadow">
         <div className="container mx-auto px-6">
@@ -265,6 +331,53 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Social Proof Section */}
+      <section className="py-24 overflow-hidden bg-secondary/5">
+        <div className="container mx-auto px-6 mb-16 text-center">
+          <motion.div {...fadeUp(0)}>
+            <div className="flex justify-center gap-1 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Sparkles key={i} className="w-5 h-5 star-yellow fill-current" />
+              ))}
+            </div>
+            <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em]">
+              Mais de <span className="text-gradient">3.000 avaliações</span> positivas
+            </h2>
+            <p className="mt-4 text-muted-foreground">Junte-se a milhares de criadores que já transformaram seu processo criativo.</p>
+          </motion.div>
+        </div>
+
+        <div className="relative">
+          <div className="social-proof-scroll">
+            {[...testimonials, ...testimonials].map((t, i) => (
+              <div key={i} className="px-4 py-8 w-[300px] md:w-[380px] shrink-0">
+                <div className="p-8 glass rounded-3xl h-full flex flex-col justify-between hover:border-primary/40 transition-colors duration-500">
+                  <div>
+                    <div className="flex gap-0.5 mb-6">
+                      {[...Array(5)].map((_, j) => (
+                        <div key={j} className="text-[10px] star-yellow">★</div>
+                      ))}
+                    </div>
+                    <p className="text-sm text-foreground/80 leading-relaxed italic">"{t.comment}"</p>
+                  </div>
+                  <div className="flex items-center gap-3 mt-8">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-border/50">
+                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">{t.name}</h4>
+                      <span className="text-[10px] text-muted-foreground">Usuário Verificado</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        </div>
+      </section>
+
       {/* Pricing */}
       <section id="pricing" className="py-24 md:py-32 section-divider-shadow">
         <div className="container mx-auto px-6">
@@ -282,10 +395,11 @@ export default function LandingPage() {
               <motion.div
                 key={plan.name}
                 {...fadeUp(i * 0.1)}
-                className={`relative p-8 glass transition-all duration-700 hover:-translate-y-2 ${
+                className={`relative p-8 glass transition-all duration-700 hover:-translate-y-2 border-beam-container ${
                   plan.highlight ? "pro-plan-glow border-primary/50 ring-1 ring-primary/30 md:scale-110 z-20 shadow-3xl shadow-primary/20" : "z-10"
                 }`}
               >
+                {plan.highlight && <div className="border-beam" />}
                 {plan.highlight && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                     <span className="px-4 py-1.5 text-xs font-bold uppercase tracking-widest btn-glow text-foreground rounded-full border border-primary/30 shadow-lg shadow-primary/20">

@@ -20,7 +20,6 @@ export function Footer() {
               <li><a href="/#features" className="hover:text-foreground transition-colors">Recursos</a></li>
               <li><a href="/#pricing" className="hover:text-foreground transition-colors">Preços</a></li>
               <li><Link to="/explore" className="hover:text-foreground transition-colors">Galeria</Link></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Blog</a></li>
             </ul>
           </div>
           <div>
@@ -28,17 +27,27 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/login" className="hover:text-foreground transition-colors">Entrar</Link></li>
               <li><Link to="/signup" className="hover:text-foreground transition-colors">Criar conta</Link></li>
-              <li><Link to="/dashboard" className="hover:text-foreground transition-colors">Dashboard</Link></li>
+              <li>
+                <button 
+                  onClick={() => {
+                    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+                    window.location.href = isLoggedIn ? "/dashboard" : "/login";
+                  }}
+                  className="hover:text-foreground transition-colors text-left"
+                >
+                  Dashboard
+                </button>
+              </li>
               <li><Link to="/settings" className="hover:text-foreground transition-colors">Configurações</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-heading text-sm font-medium mb-4 text-foreground">Empresa</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors">Sobre</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Contato</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Termos de uso</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Privacidade</a></li>
+              <li><Link to="#" className="hover:text-foreground transition-colors">Sobre</Link></li>
+              <li><Link to="#" className="hover:text-foreground transition-colors">Contato</Link></li>
+              <li><Link to="#" className="hover:text-foreground transition-colors">Termos de uso</Link></li>
+              <li><Link to="#" className="hover:text-foreground transition-colors">Privacidade</Link></li>
             </ul>
           </div>
         </div>
