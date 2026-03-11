@@ -105,7 +105,7 @@ export default {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "scan-line": "scan-line 2s ease-in-out",
         "shimmer": "shimmer 2s linear infinite",
-        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 6s ease-in-out infinite",
       },
     },
   },
