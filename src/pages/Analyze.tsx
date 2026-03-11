@@ -1,0 +1,206 @@
+import { useState, useCallback } from "react";
+import { AppSidebar } from "@/components/AppSidebar";
+import { Button } from "@/components/ui/button";
+import { mockJsonPrompt } from "@/lib/mockData";
+import { motion, AnimatePresence } from "framer-motion";
+import { Upload, Copy, FileText, BookmarkPlus, Share2 } from "lucide-react";
+import { toast } from "sonner";
+import { Link } from "react-router-dom";
+
+export default function AnalyzePage() {
+  const [image, setImage] = useState<string | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [result, setResult] = useState<typeof mockJsonPrompt | null>(null);
+  const [language, setLanguage] = useState("PT");
+  const [detailLevel, setDetailLevel] = useState(1);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file?.type.startsWith("image/")) processFile(file);
+  }, []);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) processFile(file);
+  };
+
+  const processFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImage(e.target?.result as string);
+      setAnalyzing(true);
+      setResult(null);
+      // Mock analysis delay
+      setTimeout(() => {
+        setResult(mockJsonPrompt);
+        setAnalyzing(false);
+      }, 2500);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const formatJson = (obj: object) => JSON.stringify(obj, null, 2);
+
+  const detailLabels = ["Básico", "Intermediário", "Avançado"];
+
+  return (
+    <div className="flex min-h-screen bg-background">
+      <AppSidebar />
+      <main className="flex-1 p-6 md:p-10 overflow-auto">
+        {/* Mobile header */}
+        <div className="lg:hidden mb-6">
+          <Link to="/dashboard" className="font-heading text-xl font-bold text-foreground">
+            Krea<span className="text-gilding">Prompts</span>
+          </Link>
+        </div>
+
+        <h1 className="font-heading text-3xl font-bold text-foreground mb-8">Analisar Imagem</h1>
+
+        {/* Controls */}
+        <div className="flex flex-wrap gap-4 mb-8">
+          <div className="flex items-center gap-2 bg-card rounded-xl px-4 py-2 border border-border/50">
+            <span className="text-xs text-muted-foreground">Idioma:</span>
+            {["PT 🇧🇷", "EN 🇺🇸", "ES 🇪🇸"].map((lang) => {
+              const code = lang.split(" ")[0];
+              return (
+                <button
+                  key={code}
+                  onClick={() => setLanguage(code)}
+                  className={`text-xs px-2 py-1 rounded-lg transition-colors ${
+                    language === code ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {lang}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-2 bg-card rounded-xl px-4 py-2 border border-border/50">
+            <span className="text-xs text-muted-foreground">Detalhe:</span>
+            {detailLabels.map((label, i) => (
+              <button
+                key={label}
+                onClick={() => setDetailLevel(i)}
+                className={`text-xs px-2 py-1 rounded-lg transition-colors ${
+                  detailLevel === i ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Upload / Image Preview */}
+          <div
+            className="relative rounded-2xl border-2 border-dashed border-border/50 bg-card/50 overflow-hidden min-h-[400px] flex items-center justify-center transition-colors duration-300 hover:border-gilding/30"
+            onDrop={handleDrop}
+            onDragOver={(e) => e.preventDefault()}
+          >
+            {image ? (
+              <div className="relative w-full h-full">
+                <img src={image} alt="Imagem enviada" className={`w-full h-full object-contain transition-all duration-1000 ${analyzing ? "grayscale" : ""}`} />
+                {analyzing && (
+                  <motion.div
+                    className="absolute left-0 right-0 h-[2px] bg-gilding"
+                    initial={{ top: "0%" }}
+                    animate={{ top: "100%" }}
+                    transition={{ duration: 2.5, ease: "linear" }}
+                  />
+                )}
+              </div>
+            ) : (
+              <label className="flex flex-col items-center cursor-pointer p-12">
+                <Upload className="w-12 h-12 text-muted-foreground mb-4" />
+                <p className="text-foreground font-medium">Arraste sua imagem aqui</p>
+                <p className="text-sm text-muted-foreground mt-1">ou clique para selecionar</p>
+                <input type="file" accept="image/*" className="hidden" onChange={handleFileSelect} />
+              </label>
+            )}
+          </div>
+
+          {/* JSON Output */}
+          <div className="rounded-2xl bg-card border border-border/50 overflow-hidden flex flex-col min-h-[400px]">
+            <div className="flex items-center gap-2 px-6 py-4 border-b border-border/50">
+              <div className="w-2 h-2 rounded-full bg-gilding" />
+              <span className="font-mono text-xs text-muted-foreground">prompt.json</span>
+            </div>
+            <div className="flex-1 p-6 overflow-auto">
+              <AnimatePresence mode="wait">
+                {analyzing ? (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="space-y-3"
+                  >
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-4 rounded bg-secondary animate-shimmer"
+                        style={{
+                          width: `${60 + Math.random() * 40}%`,
+                          backgroundImage: "linear-gradient(90deg, hsl(var(--secondary)) 0%, hsl(var(--ash)) 50%, hsl(var(--secondary)) 100%)",
+                          backgroundSize: "200% 100%",
+                          animationDelay: `${i * 0.1}s`,
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+                ) : result ? (
+                  <motion.pre
+                    key="result"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="font-mono text-xs leading-relaxed text-foreground/80 whitespace-pre-wrap"
+                  >
+                    {formatJson(result)}
+                  </motion.pre>
+                ) : (
+                  <motion.div
+                    key="empty"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="h-full flex items-center justify-center"
+                  >
+                    <p className="text-sm text-muted-foreground text-center">
+                      Envie uma imagem para ver o prompt gerado aqui
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {result && (
+              <div className="px-6 py-4 border-t border-border/50 flex flex-wrap gap-2">
+                <Button
+                  variant="gilding"
+                  size="sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(formatJson(result));
+                    toast.success("JSON copiado!");
+                  }}
+                >
+                  <Copy className="w-3 h-3 mr-1" /> Copiar JSON
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => toast.success("Copiado como texto!")}>
+                  <FileText className="w-3 h-3 mr-1" /> Copiar texto
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => toast.success("Salvo na biblioteca!")}>
+                  <BookmarkPlus className="w-3 h-3 mr-1" /> Salvar
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => toast.success("Link copiado!")}>
+                  <Share2 className="w-3 h-3 mr-1" /> Compartilhar
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+      <div className="noise-overlay" />
+    </div>
+  );
+}
