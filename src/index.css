@@ -221,18 +221,18 @@
 
 .border-beam-container {
   position: relative;
-  overflow: hidden;
 }
 
 .border-beam {
   position: absolute;
-  inset: 0;
+  inset: -1px;
   border: 2px solid transparent;
   border-radius: inherit;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   -webkit-mask-composite: destination-out;
   pointer-events: none;
+  z-index: 10;
 }
 
 .border-beam::after {
@@ -273,6 +273,24 @@
 @keyframes social-proof-slide {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+.social-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .social-proof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .social-proof-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .star-yellow {

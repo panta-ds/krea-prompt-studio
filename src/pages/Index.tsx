@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Braces, Globe, Pencil, BookOpen, Users, Copy, Upload, Sparkles, FileJson, ChevronLeft, ChevronRight } from "lucide-react";
+import { Braces, Globe, Pencil, BookOpen, Users, Copy, Upload, Sparkles, FileJson, Star, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import {
@@ -66,25 +66,25 @@ const sampleJson = `{
 }`;
 
 const carouselImages = [
-  { url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=800&fit=crop", prompt: "Hyper-realistic portrait of a woman, creative studio lighting, blue and orange teal shadows, cinematic 8k" },
-  { url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop", prompt: "Close up face of a man, weathered skin details, dramatic black and white photography, extremely detailed" },
-  { url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop", prompt: "Cyberpunk girl with neon makeup, purple ambient light, futuristic fashion, high gloss finish, unreal engine 5" },
-  { url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop", prompt: "Male model editorial, soft natural lighting, minimalist aesthetic, portrait photography, 85mm lens" },
-  { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop", prompt: "Stunning female portrait, glowy skin, soft focus background, magazine style, elegant and sharp" },
-  { url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop", prompt: "Professional headshot of a woman, natural business attire, friendly smile, corporate photography, sharp focus" },
-  { url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop", prompt: "Portrait of a man in natural light, outdoor setting, shallow depth of field, 50mm lens, highly detailed textures" },
-  { url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop", prompt: "Fashion photography, elegant woman, vibrant colors, studio background, luxury aesthetic" },
+  { url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "woman", lighting: "blue and orange teal shadows", quality: "cinematic 8k", style: "hyper-realistic portrait" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "man", textures: "weathered skin details", style: "dramatic black and white", focus: "extremely detailed" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "cyberpunk girl", makeup: "neon", atmosphere: "ambient purple light", engine: "unreal engine 5" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "male model", lighting: "soft natural", aesthetic: "minimalist", lens: "85mm" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "female portrait", skin: "glowy", style: "magazine", background: "soft focus" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "business woman", attire: "corporate", focus: "sharp", style: "professional headshot" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "man in natural light", setting: "outdoor", depth_of_field: "shallow", lens: "50mm" }, null, 2) },
+  { url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop", prompt: JSON.stringify({ subject: "elegant woman", colors: "vibrant", style: "fashion photography", aesthetic: "luxury" }, null, 2) },
 ];
 
 const carouselImages2 = [
-  { url: "/assets/images/cinematic_gallery_1_1773248641614.png", prompt: "Cinematic portrait of a cyberpunk wanderer in a neon-drenched rainy city, ultra-detailed, 8k" },
-  { url: "/assets/images/cinematic_gallery_2_1773248657144.png", prompt: "Astronaut standing on a crystal desert of a distant planet, two moons, epic scale, cinematic lighting" },
-  { url: "/assets/images/cinematic_gallery_3_1773248672002.png", prompt: "Interior of a Victorian library with magical floating books, glowing particles, warm ambient light" },
-  { url: "/assets/images/cinematic_gallery_4_1773248691187.png", prompt: "High-speed chase of a sleek futuristic car through a mountain pass at sunset, motion blur" },
-  { url: "/assets/images/cinematic_gallery_5_1773248708993.png", prompt: "Mechanical dragon made of brass and gears breathing blue fire, steampunk aesthetic" },
-  { url: "/assets/images/cinematic_gallery_6_1773248727151.png", prompt: "Samurai under a cherry blossom tree in a modern Tokyo street, contrast between tradition and tech" },
-  { url: "/assets/images/cinematic_gallery_7_1773248743498.png", prompt: "Deep sea explorer discovering an ancient sunken city with glowing bioluminescent plants" },
-  { url: "/assets/images/cinematic_gallery_8_1773248763573.png", prompt: "Cozy cabin in the woods during a heavy snowstorm, warm light, hyper-realistic" },
+  { url: "/assets/images/cinematic_gallery_1_1773248641614.png", prompt: JSON.stringify({ subject: "cyberpunk wanderer", setting: "neon rainy city", aesthetic: "futuristic", detail: "ultra-detailed" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_2_1773248657144.png", prompt: JSON.stringify({ subject: "astronaut", setting: "crystal desert", celestial: "two moons", lighting: "cinematic" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_3_1773248672002.png", prompt: JSON.stringify({ setting: "Victorian library", elements: "magical floating books", atmosphere: "warm ambient" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_4_1773248691187.png", prompt: JSON.stringify({ action: "high-speed chase", vehicle: "sleek futuristic car", time: "sunset", blur: "motion" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_5_1773248708993.png", prompt: JSON.stringify({ subject: "mechanical dragon", material: "brass and gears", action: "breathing blue fire" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_6_1773248727151.png", prompt: JSON.stringify({ character: "samurai", setting: "modern Tokyo", contrast: "tradition vs tech", elements: "cherry blossoms" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_7_1773248743498.png", prompt: JSON.stringify({ subject: "deep sea explorer", setting: "sunken city", lighting: "bioluminescent" }, null, 2) },
+  { url: "/assets/images/cinematic_gallery_8_1773248763573.png", prompt: JSON.stringify({ setting: "cozy cabin", weather: "heavy snowstorm", lighting: "warm indoor", style: "hyper-realistic" }, null, 2) },
 ];
 
 const testimonials = [
@@ -216,10 +216,10 @@ export default function LandingPage() {
                       alt="Carousel item" 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-background/80 hover-slide-meta flex items-end p-6">
-                      <p className="text-xs text-foreground font-mono leading-relaxed">
+                    <div className="absolute inset-0 bg-background/90 hover-slide-meta flex items-end p-6 overflow-auto">
+                      <pre className="text-[10px] text-primary font-mono leading-tight whitespace-pre-wrap">
                         {img.prompt}
-                      </p>
+                      </pre>
                     </div>
                   </div>
                 </div>
@@ -237,10 +237,10 @@ export default function LandingPage() {
                       alt="Carousel item" 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-background/80 hover-slide-meta flex items-end p-6">
-                      <p className="text-xs text-foreground font-mono leading-relaxed">
+                    <div className="absolute inset-0 bg-background/90 hover-slide-meta flex items-end p-6 overflow-auto">
+                      <pre className="text-[10px] text-primary font-mono leading-tight whitespace-pre-wrap">
                         {img.prompt}
-                      </p>
+                      </pre>
                     </div>
                   </div>
                 </div>
@@ -276,6 +276,14 @@ export default function LandingPage() {
               </motion.div>
             ))}
           </div>
+
+          <motion.div {...fadeUp(0.5)} className="mt-20 text-center">
+            <a href="#pricing">
+              <Button variant="glass" size="lg" className="btn-traveling-glow px-10 py-7 h-auto text-lg">
+                Começar a criar agora <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </a>
+          </motion.div>
         </div>
       </section>
 
@@ -293,9 +301,16 @@ export default function LandingPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
           <div className="relative z-10 max-w-2xl">
             <span className="text-primary font-mono text-xs uppercase tracking-[0.2em] mb-4 block">Exemplo na prática</span>
-            <h3 className="font-heading text-xl md:text-3xl font-medium text-foreground mb-4 leading-tight">
-              "Hyper-realistic cinematic close-up of an artist's hands working on a holographic canvas..."
-            </h3>
+            <pre className="font-heading text-xs md:text-sm font-medium text-foreground mb-4 leading-tight bg-background/40 p-4 rounded-xl backdrop-blur-sm border border-white/5">
+{JSON.stringify({
+  subject: "artist hands",
+  canvas: "holographic",
+  style: "hyper-realistic cinematic",
+  lighting: "volumetric",
+  detail: "extremely detailed",
+  resolution: "8k"
+}, null, 2)}
+            </pre>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Este é o resultado da nossa análise. A precisão em descrever iluminação volumétrica, texturas e atmosfera permite que você recrie exatamente o que imaginou em qualquer ferramenta de IA.
             </p>
@@ -332,12 +347,12 @@ export default function LandingPage() {
       </section>
 
       {/* Social Proof Section */}
-      <section className="py-24 overflow-hidden bg-secondary/5">
+      <section className="py-24 bg-secondary/5">
         <div className="container mx-auto px-6 mb-16 text-center">
           <motion.div {...fadeUp(0)}>
-            <div className="flex justify-center gap-1 mb-4">
+            <div className="flex justify-center gap-1.5 mb-6">
               {[...Array(5)].map((_, i) => (
-                <Sparkles key={i} className="w-5 h-5 star-yellow fill-current" />
+                <Star key={i} className="w-5 h-5 star-yellow fill-current" />
               ))}
             </div>
             <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em]">
@@ -347,34 +362,34 @@ export default function LandingPage() {
           </motion.div>
         </div>
 
-        <div className="relative">
-          <div className="social-proof-scroll">
-            {[...testimonials, ...testimonials].map((t, i) => (
-              <div key={i} className="px-4 py-8 w-[300px] md:w-[380px] shrink-0">
-                <div className="p-8 glass rounded-3xl h-full flex flex-col justify-between hover:border-primary/40 transition-colors duration-500">
-                  <div>
-                    <div className="flex gap-0.5 mb-6">
-                      {[...Array(5)].map((_, j) => (
-                        <div key={j} className="text-[10px] star-yellow">★</div>
-                      ))}
-                    </div>
-                    <p className="text-sm text-foreground/80 leading-relaxed italic">"{t.comment}"</p>
+        <div className="container mx-auto px-6">
+          <div className="social-proof-grid">
+            {testimonials.map((t, i) => (
+              <motion.div 
+                key={i} 
+                {...fadeUp(i * 0.05)}
+                className="p-8 glass rounded-3xl h-full flex flex-col justify-between hover:border-primary/40 transition-all duration-500 hover:-translate-y-1"
+              >
+                <div>
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-3 h-3 star-yellow fill-current" />
+                    ))}
                   </div>
-                  <div className="flex items-center gap-3 mt-8">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-border/50">
-                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">{t.name}</h4>
-                      <span className="text-[10px] text-muted-foreground">Usuário Verificado</span>
-                    </div>
+                  <p className="text-sm text-foreground/80 leading-relaxed italic">"{t.comment}"</p>
+                </div>
+                <div className="flex items-center gap-3 mt-8">
+                  <div className="w-10 h-10 rounded-full overflow-hidden border border-border/50">
+                    <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">{t.name}</h4>
+                    <span className="text-[10px] text-muted-foreground">Usuário Verificado</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         </div>
       </section>
 
@@ -465,6 +480,15 @@ export default function LandingPage() {
                 </AccordionItem>
               ))}
             </Accordion>
+          </motion.div>
+
+          <motion.div {...fadeUp(0.2)} className="mt-16 text-center">
+            <h3 className="font-heading text-lg font-medium text-foreground mb-6">Ainda tem dúvidas?</h3>
+            <a href="#pricing">
+              <Button variant="glass" size="lg" className="btn-traveling-glow px-8 py-6 h-auto">
+                Escolher meu plano <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </a>
           </motion.div>
         </div>
       </section>
