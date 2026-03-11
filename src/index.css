@@ -176,19 +176,19 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 150%;
-  height: 300%;
+  width: 160%;
+  height: 160%;
   aspect-ratio: 1;
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    transparent 120deg,
-    hsl(var(--primary)) 180deg,
-    transparent 240deg,
+    transparent 150deg,
+    hsl(var(--primary) / 0.8) 180deg,
+    transparent 210deg,
     transparent 360deg
   );
   translate: -50% -50%;
-  animation: rotate 4s linear infinite;
+  animation: rotate 6s linear infinite;
   z-index: -1;
 }
 
@@ -196,14 +196,20 @@
   content: "";
   position: absolute;
   inset: 1px;
-  background: inherit;
+  background: hsl(var(--glass-bg));
   border-radius: inherit;
   z-index: -1;
 }
 
+.json-container {
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
 @keyframes rotate {
-  from { rotate: 0deg; }
-  to { rotate: 360deg; }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Background gradient orbs */

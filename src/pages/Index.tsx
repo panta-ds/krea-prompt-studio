@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Braces, Globe, Pencil, BookOpen, Users, Copy, Upload, Sparkles, FileJson, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Accordion,
   AccordionContent,
@@ -30,8 +31,8 @@ const features = [
 
 const plans = [
   { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["5 análises por mês", "Prompt JSON básico", "Biblioteca pessoal", "1 idioma de saída"], cta: "Começar grátis", highlight: false },
-  { name: "Pro", price: "R$ 149", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Prompt JSON avançado (10+ campos)", "Editor completo de prompts", "3 idiomas de saída", "Galeria pública", "Exportação JSON e CSV", "Suporte prioritário"], cta: "Assinar Pro", highlight: true },
-  { name: "Agency", price: "R$ 499", period: "/por mês", desc: "Para times e agências que produzem em escala.", features: ["Análises ilimitadas", "Tudo do plano Pro", "API de acesso direto", "Até 5 usuários no time", "Análise em lote (bulk)", "Suporte dedicado"], cta: "Falar com a equipe", highlight: false },
+  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Prompt JSON avançado (10+ campos)", "Editor completo de prompts", "3 idiomas de saída", "Galeria pública", "Exportação JSON e CSV", "Suporte prioritário"], cta: "Assinar Pro", highlight: true },
+  { name: "Agency", price: "R$ 129", period: "/por mês", desc: "Para times e agências que produzem em escala.", features: ["Análises ilimitadas", "Tudo do plano Pro", "API de acesso direto", "Até 5 usuários no time", "Análise em lote (bulk)", "Suporte dedicado"], cta: "Falar com a equipe", highlight: false },
 ];
 
 const sampleJson = `{
@@ -46,11 +47,11 @@ const sampleJson = `{
 }`;
 
 const carouselImages = [
-  { url: "https://images.unsplash.com/photo-1633174228771-460f47bc5276?w=600&h=800&fit=crop", prompt: "Neon portrait of a street samurai, night city vibes" },
-  { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=800&fit=crop", prompt: "Abstract 3D flow, gradient colors, high fashion render" },
-  { url: "https://images.unsplash.com/photo-1614728263952-84ea206f99b6?w=600&h=800&fit=crop", prompt: "Hyper-realistic space explorer, cinematic lighting, Mars landscape" },
-  { url: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600&h=800&fit=crop", prompt: "Minimalist architect structure, concrete and glass, brutalism" },
-  { url: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=600&h=800&fit=crop", prompt: "Surreal desert landscape, floating geometric shapes, pastel sky" },
+  { url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=800&fit=crop", prompt: "Hyper-realistic portrait of a woman, creative studio lighting, blue and orange teal shadows, cinematic 8k" },
+  { url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop", prompt: "Close up face of a man, weathered skin details, dramatic black and white photography, extremely detailed" },
+  { url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop", prompt: "Cyberpunk girl with neon makeup, purple ambient light, futuristic fashion, high gloss finish, unreal engine 5" },
+  { url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop", prompt: "Male model editorial, soft natural lighting, minimalist aesthetic, portrait photography, 85mm lens" },
+  { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop", prompt: "Stunning female portrait, glowy skin, soft focus background, magazine style, elegant and sharp" },
 ];
 
 const faqs = [
@@ -66,7 +67,7 @@ export default function LandingPage() {
   const yOrb2 = useTransform(scrollY, [0, 1000], [0, -150]);
   const yMockup = useTransform(scrollY, [0, 1000], [0, 100]);
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" }, [Autoplay({ delay: 3000, stopOnInteraction: false })]);
 
   const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
   const scrollNext = () => emblaApi && emblaApi.scrollNext();
@@ -98,8 +99,8 @@ export default function LandingPage() {
             </motion.p>
             <motion.div {...fadeUp(0.3)} className="mt-10 flex flex-col items-center">
               <Link to="/analyze">
-                <Button variant="glass" size="lg" className="text-base btn-traveling-glow">
-                  Analisar minha primeira imagem — grátis
+                <Button variant="glass" size="lg" className="text-base btn-traveling-glow px-8 py-6 h-auto">
+                  Criar meu primeiro prompt grátis
                 </Button>
               </Link>
               <p className="mt-4 text-xs text-muted-foreground">Sem cartão de crédito. Resultado em segundos.</p>
@@ -127,7 +128,7 @@ export default function LandingPage() {
                   <FileJson className="w-4 h-4 text-primary" />
                   <span className="text-xs font-mono text-muted-foreground">prompt.json</span>
                 </div>
-                <pre className="font-mono text-xs md:text-sm leading-relaxed text-muted-foreground overflow-x-auto">
+                <pre className="font-mono text-xs md:text-sm leading-relaxed text-muted-foreground json-container">
                   {sampleJson}
                 </pre>
               </div>
@@ -180,8 +181,16 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="py-24 md:py-32">
-        <div className="container mx-auto px-6">
+      <section className="py-24 md:py-32 relative">
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+          <img 
+            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&h=400&fit=crop" 
+            alt="AI Face Banner" 
+            className="w-full h-full object-cover grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        </div>
+        <div className="container mx-auto px-6 relative z-10">
           <motion.div {...fadeUp(0)} className="text-center mb-20">
             <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Como funciona</span>
             <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em]">
@@ -252,14 +261,16 @@ export default function LandingPage() {
               <motion.div
                 key={plan.name}
                 {...fadeUp(i * 0.1)}
-                className={`relative p-8 glass transition-all duration-300 hover:-translate-y-1 ${
-                  plan.highlight ? "border-primary/30" : ""
+                className={`relative p-8 glass transition-all duration-500 hover:-translate-y-2 ${
+                  plan.highlight ? "border-primary/50 ring-1 ring-primary/20 scale-105 z-20 shadow-2xl shadow-primary/10" : "z-10"
                 }`}
               >
                 {plan.highlight && (
-                  <span className="absolute -top-3 left-8 px-3 py-1 text-xs font-medium btn-glow text-foreground rounded-full">
-                    Popular
-                  </span>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className="px-4 py-1.5 text-xs font-bold uppercase tracking-widest btn-glow text-foreground rounded-full border border-primary/30 shadow-lg shadow-primary/20">
+                      Popular
+                    </span>
+                  </div>
                 )}
                 <h3 className="font-heading text-lg font-medium text-foreground">{plan.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1">
