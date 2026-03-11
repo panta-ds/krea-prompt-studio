@@ -2,9 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
 const pageVariants = {
-  initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
-  exit: { opacity: 0, y: -8, transition: { duration: 0.2 } },
+  initial: { opacity: 0, scale: 0.98 },
+  animate: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" as const } },
+  exit: { opacity: 0, scale: 0.98, transition: { duration: 0.25 } },
 };
 
 export function PageTransition({ children }: { children: React.ReactNode }) {

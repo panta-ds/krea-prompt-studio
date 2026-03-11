@@ -17,50 +17,54 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-6">
+    <div className="min-h-screen bg-background flex items-center justify-center px-6 relative overflow-hidden">
+      <div className="bg-orb-blue -top-48 -left-48" />
+      <div className="bg-orb-purple -bottom-48 -right-48" />
+      
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md relative z-10"
       >
         <Link to="/" className="block text-center mb-12">
-          <span className="font-heading text-3xl font-bold text-foreground">
-            Krea<span className="text-gilding">Prompts</span>
+          <span className="font-heading text-2xl font-semibold tracking-tight">
+            <span className="text-foreground">Krea</span>
+            <span className="text-muted-foreground font-light">Prompts</span>
           </span>
         </Link>
 
-        <div className="p-8 rounded-2xl bg-card border border-border/50">
-          <h1 className="font-heading text-2xl font-bold text-foreground mb-2">Criar conta</h1>
+        <div className="p-8 glass">
+          <h1 className="font-heading text-xl font-medium text-foreground mb-2">Criar conta</h1>
           <p className="text-sm text-muted-foreground mb-8">Comece a transformar imagens em prompts</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <Label htmlFor="name" className="text-sm text-foreground">Nome</Label>
-              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Seu nome" className="mt-2 bg-secondary border-border/50 rounded-xl h-11 text-foreground placeholder:text-muted-foreground" />
+              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Seu nome" className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground placeholder:text-muted-foreground" />
             </div>
             <div>
               <Label htmlFor="email" className="text-sm text-foreground">Email</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 bg-secondary border-border/50 rounded-xl h-11 text-foreground placeholder:text-muted-foreground" />
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground placeholder:text-muted-foreground" />
             </div>
             <div>
               <Label htmlFor="password" className="text-sm text-foreground">Senha</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mínimo 8 caracteres" className="mt-2 bg-secondary border-border/50 rounded-xl h-11 text-foreground placeholder:text-muted-foreground" />
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mínimo 8 caracteres" className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground placeholder:text-muted-foreground" />
             </div>
             <div className="flex items-start gap-2">
-              <Checkbox id="terms" className="mt-1 border-border data-[state=checked]:bg-gilding data-[state=checked]:border-gilding" />
+              <Checkbox id="terms" className="mt-1 border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
               <Label htmlFor="terms" className="text-xs text-muted-foreground leading-relaxed">
                 Concordo com os Termos de Uso e Política de Privacidade
               </Label>
             </div>
-            <Button variant="gilding" className="w-full h-11" type="submit">
+            <Button variant="glass" className="w-full h-11" type="submit">
               Criar conta
             </Button>
           </form>
 
           <div className="mt-6 relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border/50" /></div>
-            <div className="relative flex justify-center text-xs"><span className="px-3 bg-card text-muted-foreground">ou</span></div>
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
+            <div className="relative flex justify-center text-xs"><span className="px-3 bg-transparent text-muted-foreground backdrop-blur-sm">ou</span></div>
           </div>
 
           <Button variant="outline" className="w-full mt-6 h-11 rounded-xl">
@@ -74,7 +78,7 @@ export default function SignupPage() {
           </Button>
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
-            Já tem conta? <Link to="/login" className="text-gilding hover:underline">Entrar</Link>
+            Já tem conta? <Link to="/login" className="text-primary hover:underline">Entrar</Link>
           </p>
         </div>
       </motion.div>
