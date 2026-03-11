@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Cormorant Garamond"', 'serif'],
-        body: ['"DM Sans"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+        body: ['"Inter"', 'sans-serif'],
+        mono: ['"Geist Mono"', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -62,17 +62,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        vault: "hsl(var(--vault))",
-        ash: "hsl(var(--ash))",
-        gilding: "hsl(var(--gilding))",
-        parchment: "hsl(var(--parchment))",
+        highlight: "hsl(var(--highlight))",
+        "highlight-accent": "hsl(var(--highlight-accent))",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        xl: "1rem",
-        "2xl": "1.25rem",
+        xl: "1.5rem",
+        "2xl": "1.75rem",
       },
       keyframes: {
         "accordion-down": {
@@ -84,7 +82,7 @@ export default {
           to: { height: "0" },
         },
         "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "scan-line": {
@@ -95,13 +93,18 @@ export default {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 15px hsl(228 100% 72% / 0.15)" },
+          "50%": { boxShadow: "0 0 25px hsl(228 100% 72% / 0.3)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out forwards",
+        "fade-in": "fade-in 0.6s ease-out forwards",
         "scan-line": "scan-line 2s ease-in-out",
         "shimmer": "shimmer 2s linear infinite",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
       },
     },
   },

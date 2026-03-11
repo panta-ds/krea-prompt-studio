@@ -14,9 +14,10 @@ export function AppSidebar() {
   const location = useLocation();
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 min-h-screen bg-card border-r border-border/50 p-6">
-      <Link to="/" className="font-heading text-xl font-bold text-foreground mb-10">
-        Krea<span className="text-gilding">Prompts</span>
+    <aside className="hidden lg:flex flex-col w-64 min-h-screen glass-subtle p-6 border-r border-border">
+      <Link to="/" className="font-heading text-lg font-semibold tracking-tight mb-10">
+        <span className="text-foreground">Krea</span>
+        <span className="text-muted-foreground font-light">Prompts</span>
       </Link>
 
       <nav className="flex-1 space-y-1">
@@ -26,13 +27,13 @@ export function AppSidebar() {
             <Link
               key={item.label}
               to={item.path}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors duration-200 ${
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 ${
                 active
-                  ? "bg-secondary text-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "bg-accent/20 text-foreground border-l-2 border-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
               }`}
             >
-              <item.icon className={`w-4 h-4 ${active ? "text-gilding" : ""}`} />
+              <item.icon className={`w-4 h-4 ${active ? "text-primary" : ""}`} />
               {item.label}
             </Link>
           );
@@ -41,7 +42,7 @@ export function AppSidebar() {
 
       <Link
         to="/"
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors duration-200"
+        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
       >
         <LogOut className="w-4 h-4" />
         Sair

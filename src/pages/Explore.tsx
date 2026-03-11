@@ -18,12 +18,13 @@ export default function ExplorePage() {
       <AppSidebar />
       <main className="flex-1 p-6 md:p-10 overflow-auto">
         <div className="lg:hidden mb-6">
-          <Link to="/dashboard" className="font-heading text-xl font-bold text-foreground">
-            Krea<span className="text-gilding">Prompts</span>
+          <Link to="/dashboard" className="font-heading text-lg font-semibold tracking-tight">
+            <span className="text-foreground">Krea</span>
+            <span className="text-muted-foreground font-light">Prompts</span>
           </Link>
         </div>
 
-        <h1 className="font-heading text-3xl font-bold text-foreground mb-8">Explorar</h1>
+        <h1 className="font-heading text-2xl font-medium text-foreground mb-8 tracking-[-0.02em]">Explorar</h1>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-1 max-w-md">
@@ -32,7 +33,7 @@ export default function ExplorePage() {
               placeholder="Buscar na galeria..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 bg-card border-border/50 rounded-xl h-10 text-foreground placeholder:text-muted-foreground"
+              className="pl-10 bg-secondary border-border rounded-xl h-10 text-foreground placeholder:text-muted-foreground"
             />
           </div>
           <div className="flex gap-2">
@@ -40,9 +41,9 @@ export default function ExplorePage() {
               <button
                 key={f}
                 onClick={() => setActiveFilter(i)}
-                className={`text-xs px-4 py-2 rounded-xl transition-colors ${
+                className={`text-xs px-4 py-2 rounded-xl transition-all duration-300 ${
                   activeFilter === i
-                    ? "bg-secondary text-foreground"
+                    ? "glass-subtle text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -53,23 +54,23 @@ export default function ExplorePage() {
         </div>
 
         {/* Masonry grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-0">
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
           {mockGalleryItems.map((item, i) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.05 }}
-              className="relative group break-inside-avoid"
+              className="relative group break-inside-avoid mb-4 glass overflow-hidden"
             >
               <img
                 src={item.image}
                 alt="Galeria"
-                className="w-full block"
+                className="w-full block rounded-lg"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
-                <pre className="font-mono text-[10px] text-foreground/70 max-h-32 overflow-hidden mb-4 text-center">
+              <div className="absolute inset-0 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 rounded-lg">
+                <pre className="font-mono text-[10px] text-muted-foreground max-h-32 overflow-hidden mb-4 text-center">
                   {JSON.stringify(item.prompt, null, 2).slice(0, 200)}...
                 </pre>
                 <button
@@ -77,7 +78,7 @@ export default function ExplorePage() {
                     navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2));
                     toast.success("Prompt copiado!");
                   }}
-                  className="flex items-center gap-1 px-4 py-2 rounded-xl bg-gilding text-vault text-xs font-medium hover:bg-gilding/85 transition-colors"
+                  className="flex items-center gap-1 px-4 py-2 rounded-xl btn-glow text-foreground text-xs font-medium"
                 >
                   <Copy className="w-3 h-3" /> Copiar
                 </button>

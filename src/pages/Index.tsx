@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Braces, Globe, Pencil, BookOpen, Users, Copy, Upload, Sparkles, FileJson } from "lucide-react";
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
   transition: { duration: 0.6, delay, ease: "easeOut" as const },
@@ -43,26 +43,30 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden">
-        <div className="container mx-auto px-6">
+      <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+        {/* Background orbs */}
+        <div className="bg-orb-blue -top-32 -left-32" />
+        <div className="bg-orb-purple -bottom-32 -right-32" />
+
+        <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1
               {...fadeUp(0)}
-              className="font-heading text-5xl md:text-7xl font-bold leading-tight tracking-tight text-foreground"
+              className="font-heading text-[40px] md:text-[64px] font-semibold leading-[1.05] tracking-[-0.03em] text-foreground"
             >
               Transforme qualquer imagem em um{" "}
-              <span className="text-gilding">prompt perfeito</span>
+              <span className="text-gradient">prompt perfeito</span>
             </motion.h1>
             <motion.p
               {...fadeUp(0.15)}
-              className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
+              className="mt-6 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-[1.7]"
             >
               Faça upload de uma imagem e receba um prompt JSON estruturado e detalhado, 
               pronto para recriar em Midjourney, DALL-E ou Flux.
             </motion.p>
             <motion.div {...fadeUp(0.3)} className="mt-10">
               <Link to="/analyze">
-                <Button variant="gilding" size="lg" className="text-base">
+                <Button variant="glass" size="lg" className="text-base animate-glow-pulse">
                   Analise sua primeira imagem — é grátis
                 </Button>
               </Link>
@@ -74,7 +78,7 @@ export default function LandingPage() {
             {...fadeUp(0.4)}
             className="mt-20 max-w-5xl mx-auto"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-border/50 bg-card">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 glass overflow-hidden">
               <div className="relative aspect-[4/3] md:aspect-auto">
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=600&fit=crop"
@@ -84,12 +88,12 @@ export default function LandingPage() {
                 />
                 <div className="absolute inset-0 bg-background/20" />
               </div>
-              <div className="p-6 md:p-8 flex flex-col justify-center bg-secondary/30">
+              <div className="p-6 md:p-8 flex flex-col justify-center glass-code">
                 <div className="flex items-center gap-2 mb-4">
-                  <FileJson className="w-4 h-4 text-gilding" />
+                  <FileJson className="w-4 h-4 text-primary" />
                   <span className="text-xs font-mono text-muted-foreground">prompt.json</span>
                 </div>
-                <pre className="font-mono text-xs md:text-sm leading-relaxed text-foreground/80 overflow-x-auto">
+                <pre className="font-mono text-xs md:text-sm leading-relaxed text-muted-foreground overflow-x-auto">
                   {sampleJson}
                 </pre>
               </div>
@@ -103,7 +107,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-6">
           <motion.h2
             {...fadeUp(0)}
-            className="font-heading text-3xl md:text-5xl font-bold text-center text-foreground mb-20"
+            className="font-heading text-2xl md:text-4xl font-medium text-center text-foreground mb-20 tracking-[-0.02em]"
           >
             Como funciona
           </motion.h2>
@@ -114,12 +118,12 @@ export default function LandingPage() {
               { icon: Braces, step: "03", title: "Receba o JSON", desc: "Um prompt estruturado, pronto para usar em qualquer ferramenta de IA." },
             ].map((item, i) => (
               <motion.div key={item.step} {...fadeUp(i * 0.15)} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-secondary mb-6">
-                  <item.icon className="w-7 h-7 text-gilding" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl glass mb-6">
+                  <item.icon className="w-7 h-7 text-primary" />
                 </div>
                 <span className="block font-mono text-xs text-muted-foreground mb-2">{item.step}</span>
-                <h3 className="font-heading text-xl font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <h3 className="font-heading text-lg font-medium text-foreground mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -127,23 +131,23 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-24 md:py-32 bg-secondary/20">
+      <section id="features" className="py-24 md:py-32">
         <div className="container mx-auto px-6">
           <motion.h2
             {...fadeUp(0)}
-            className="font-heading text-3xl md:text-5xl font-bold text-center text-foreground mb-20"
+            className="font-heading text-2xl md:text-4xl font-medium text-center text-foreground mb-20 tracking-[-0.02em]"
           >
             Recursos
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {features.map((f, i) => (
               <motion.div
                 key={f.title}
                 {...fadeUp(i * 0.08)}
-                className="p-8 rounded-2xl bg-card hover:bg-secondary/50 transition-colors duration-300"
+                className="p-8 glass hover:-translate-y-1 hover:border-foreground/16 transition-all duration-300"
               >
-                <f.icon className="w-6 h-6 text-gilding mb-4" />
-                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">{f.title}</h3>
+                <f.icon className="w-5 h-5 text-primary mb-4" />
+                <h3 className="font-heading text-base font-medium text-foreground mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
@@ -156,35 +160,33 @@ export default function LandingPage() {
         <div className="container mx-auto px-6">
           <motion.h2
             {...fadeUp(0)}
-            className="font-heading text-3xl md:text-5xl font-bold text-center text-foreground mb-20"
+            className="font-heading text-2xl md:text-4xl font-medium text-center text-foreground mb-20 tracking-[-0.02em]"
           >
             Preços
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {plans.map((plan, i) => (
               <motion.div
                 key={plan.name}
                 {...fadeUp(i * 0.1)}
-                className={`relative p-8 rounded-2xl transition-colors duration-300 ${
-                  plan.highlight
-                    ? "bg-card border-2 border-gilding/30"
-                    : "bg-card border border-border/50"
+                className={`relative p-8 glass transition-all duration-300 hover:-translate-y-1 ${
+                  plan.highlight ? "border-primary/30" : ""
                 }`}
               >
                 {plan.highlight && (
-                  <span className="absolute -top-3 left-8 px-3 py-1 text-xs font-medium bg-gilding text-vault rounded-full">
+                  <span className="absolute -top-3 left-8 px-3 py-1 text-xs font-medium btn-glow text-foreground rounded-full">
                     Popular
                   </span>
                 )}
-                <h3 className="font-heading text-xl font-semibold text-foreground">{plan.name}</h3>
+                <h3 className="font-heading text-lg font-medium text-foreground">{plan.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="font-heading text-4xl font-bold text-foreground">{plan.price}</span>
+                  <span className="font-heading text-4xl font-semibold text-foreground">{plan.price}</span>
                   <span className="text-sm text-muted-foreground">{plan.period}</span>
                 </div>
                 <ul className="mt-8 space-y-3">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 rounded-full bg-gilding shrink-0" />
+                      <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
                       {f}
                     </li>
                   ))}
@@ -192,7 +194,7 @@ export default function LandingPage() {
                 <div className="mt-8">
                   <Link to="/signup">
                     <Button
-                      variant={plan.highlight ? "gilding" : "outline"}
+                      variant={plan.highlight ? "glass" : "outline"}
                       className="w-full"
                     >
                       {plan.cta}

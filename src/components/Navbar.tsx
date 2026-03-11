@@ -17,15 +17,16 @@ export function Navbar() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 backdrop-blur-md bg-background/80"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl"
     >
-      <nav className="container mx-auto flex h-16 items-center justify-between px-6">
-        <Link to="/" className="font-heading text-2xl font-bold text-foreground tracking-wide">
-          Krea<span className="text-gilding">Prompts</span>
+      <nav className="glass flex h-14 items-center justify-between px-6 rounded-2xl">
+        <Link to="/" className="font-heading text-lg font-semibold tracking-tight">
+          <span className="text-foreground font-semibold">Krea</span>
+          <span className="text-muted-foreground font-light">Prompts</span>
         </Link>
 
         {isLanding && (
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -38,12 +39,12 @@ export function Navbar() {
           </div>
         )}
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Link to="/login">
-            <Button variant="ghost" size="sm">Entrar</Button>
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Entrar</Button>
           </Link>
           <Link to="/signup">
-            <Button variant="gilding" size="sm">Começar Grátis</Button>
+            <Button variant="glass" size="sm">Começar Grátis</Button>
           </Link>
         </div>
       </nav>
