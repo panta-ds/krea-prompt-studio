@@ -5,13 +5,32 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Braces, Globe, Pencil, BookOpen, Users, Copy, Upload, Sparkles, FileJson, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+import AutoScroll from "embla-carousel-auto-scroll";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+const ParticleBackground = () => (
+  <div className="particles-container">
+    {[...Array(20)].map((_, i) => (
+      <div 
+        key={i} 
+        className="particle"
+        style={{
+          left: `${Math.random() * 100}%`,
+          width: `${Math.random() * 6 + 2}px`,
+          height: `${Math.random() * 6 + 2}px`,
+          "--duration": `${Math.random() * 10 + 10}s`,
+          "--x-start": `${Math.random() * 20 - 10}px`,
+          "--x-end": `${Math.random() * 60 - 30}px`,
+        } as React.CSSProperties}
+      />
+    ))}
+  </div>
+);
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 16 },
@@ -30,9 +49,9 @@ const features = [
 ];
 
 const plans = [
-  { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["5 análises por mês", "Prompt JSON básico", "Biblioteca pessoal", "1 idioma de saída"], cta: "Começar grátis", highlight: false },
-  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Prompt JSON avançado (10+ campos)", "Editor completo de prompts", "3 idiomas de saída", "Galeria pública", "Exportação JSON e CSV", "Suporte prioritário"], cta: "Assinar Pro", highlight: true },
-  { name: "Agency", price: "R$ 129", period: "/por mês", desc: "Para times e agências que produzem em escala.", features: ["Análises ilimitadas", "Tudo do plano Pro", "API de acesso direto", "Até 5 usuários no time", "Análise em lote (bulk)", "Suporte dedicado"], cta: "Falar com a equipe", highlight: false },
+  { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["20 análises por mês", "Prompt JSON básico", "Biblioteca pessoal"], cta: "Começar grátis", highlight: false },
+  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Multi-idioma", "Editor avançado", "Galeria pública", "Suporte prioritário"], cta: "Assinar Pro", highlight: true },
+  { name: "Agency", price: "R$ 129", period: "/por mês", desc: "Para times e agências que produzem em escala.", features: ["Análises ilimitadas", "API de acesso direto", "Times e colaboração", "Exportação em massa", "Suporte dedicado"], cta: "Falar com a equipe", highlight: false },
 ];
 
 const sampleJson = `{
@@ -52,11 +71,14 @@ const carouselImages = [
   { url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop", prompt: "Cyberpunk girl with neon makeup, purple ambient light, futuristic fashion, high gloss finish, unreal engine 5" },
   { url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop", prompt: "Male model editorial, soft natural lighting, minimalist aesthetic, portrait photography, 85mm lens" },
   { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop", prompt: "Stunning female portrait, glowy skin, soft focus background, magazine style, elegant and sharp" },
+  { url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop", prompt: "Professional headshot of a woman, natural business attire, friendly smile, corporate photography, sharp focus" },
+  { url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop", prompt: "Portrait of a man in natural light, outdoor setting, shallow depth of field, 50mm lens, highly detailed textures" },
+  { url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop", prompt: "Fashion photography, elegant woman, vibrant colors, studio background, luxury aesthetic" },
 ];
 
 const faqs = [
   { q: "O prompt gerado funciona em qualquer IA?", a: "Sim! O prompt JSON extrai os conceitos universais da imagem, facilitando a recriação no Midjourney, DALL-E 3, Flux, Stable Diffusion e outras ferramentas." },
-  { q: "Posso testar sem pagar nada?", a: "Com certeza. O plano Free permite até 5 análises gratuitas todos os meses para você conhecer a precisão da nossa IA." },
+  { q: "Posso testar sem pagar nada?", a: "Com certeza. O plano Free permite até 20 análises gratuitas todos os meses para você conhecer a precisão da nossa IA." },
   { q: "Como o 'Editor de Prompts' ajuda na criação?", a: "A IA pode interpretar detalhes que você queira mudar. O editor permite ajustar campos específicos como iluminação ou estilo antes de você gerar sua nova imagem." },
   { q: "Meus dados e imagens estão seguros?", a: "Privacidade é nossa prioridade. Suas imagens de upload são processadas de forma segura e não são compartilhadas com terceiros." },
 ];
@@ -67,13 +89,17 @@ export default function LandingPage() {
   const yOrb2 = useTransform(scrollY, [0, 1000], [0, -150]);
   const yMockup = useTransform(scrollY, [0, 1000], [0, 100]);
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" }, [Autoplay({ delay: 3000, stopOnInteraction: false })]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true, 
+    align: "start",
+    dragFree: true
+  }, [AutoScroll({ playOnInit: true, speed: 1, stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false })]);
 
   const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
   const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
       {/* Hero */}
@@ -98,7 +124,7 @@ export default function LandingPage() {
               Envie uma foto e receba instantaneamente um prompt JSON estruturado, detalhado e pronto para recriar a imagem em Midjourney, DALL-E, Flux ou qualquer ferramenta de IA.
             </motion.p>
             <motion.div {...fadeUp(0.3)} className="mt-10 flex flex-col items-center">
-              <Link to="/analyze">
+              <Link to="/login">
                 <Button variant="glass" size="lg" className="text-base btn-traveling-glow px-8 py-6 h-auto">
                   Criar meu primeiro prompt grátis
                 </Button>
@@ -113,8 +139,8 @@ export default function LandingPage() {
             {...fadeUp(0.4)}
             className="mt-20 max-w-5xl mx-auto"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              <div className="relative aspect-[4/3] md:aspect-auto rounded-2xl overflow-hidden glass hover:border-primary/30 transition-all duration-500">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto items-center">
+              <div className="relative aspect-[4/3] md:aspect-auto rounded-3xl overflow-hidden glass hover:border-primary/40 transition-all duration-700 shadow-2xl shadow-primary/5">
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=600&fit=crop"
                   alt="Exemplo de imagem analisada"
@@ -123,14 +149,16 @@ export default function LandingPage() {
                 />
                 <div className="absolute inset-0 bg-background/20" />
               </div>
-              <div className="p-6 md:p-8 flex flex-col justify-center glass-code rounded-2xl hover:border-primary/30 transition-all duration-500">
+              <div className="p-6 md:p-10 flex flex-col justify-center glass-code rounded-3xl hover:border-primary/40 transition-all duration-700 shadow-2xl overflow-hidden">
                 <div className="flex items-center gap-2 mb-4">
                   <FileJson className="w-4 h-4 text-primary" />
                   <span className="text-xs font-mono text-muted-foreground">prompt.json</span>
                 </div>
-                <pre className="font-mono text-xs md:text-sm leading-relaxed text-muted-foreground json-container">
-                  {sampleJson}
-                </pre>
+                <div className="overflow-x-auto">
+                  <pre className="font-mono text-xs md:text-sm leading-relaxed text-muted-foreground json-container whitespace-pre-wrap">
+                    {sampleJson}
+                  </pre>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -138,9 +166,9 @@ export default function LandingPage() {
       </section>
 
       {/* Mini Gallery Carousel */}
-      <section className="py-24 bg-secondary/30">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <section id="gallery" className="py-24 bg-secondary/30 section-divider-shadow">
+        <div className="container mx-auto px-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-xl">
               <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Galeria em destaque</span>
               <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em]">
@@ -156,40 +184,33 @@ export default function LandingPage() {
               </Button>
             </div>
           </div>
+        </div>
 
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-4">
-              {carouselImages.map((img, i) => (
-                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_40%] lg:flex-[0_0_25%] min-w-0">
-                  <div className="glass rounded-2xl overflow-hidden aspect-[3/4] group cursor-pointer border-border/40">
-                    <img 
-                      src={img.url} 
-                      alt="Carousel item" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                      <p className="text-xs text-muted-foreground font-mono leading-relaxed line-clamp-3">
-                        {img.prompt}
-                      </p>
-                    </div>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-2">
+            {[...carouselImages, ...carouselImages].map((img, i) => (
+              <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
+                <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20">
+                  <img 
+                    src={img.url} 
+                    alt="Carousel item" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <p className="text-[10px] text-muted-foreground font-mono leading-relaxed line-clamp-3">
+                      {img.prompt}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* How it works */}
-      <section className="py-24 md:py-32 relative">
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-          <img 
-            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&h=400&fit=crop" 
-            alt="AI Face Banner" 
-            className="w-full h-full object-cover grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
-        </div>
+      <section className="py-24 md:py-32 relative overflow-hidden section-divider-shadow bg-secondary/10">
+        <ParticleBackground />
         <div className="container mx-auto px-6 relative z-10">
           <motion.div {...fadeUp(0)} className="text-center mb-20">
             <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Como funciona</span>
@@ -217,7 +238,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-24 md:py-32">
+      <section id="features" className="py-24 md:py-32 section-divider-shadow">
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp(0)} className="text-center mb-20">
             <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Recursos</span>
@@ -245,7 +266,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24 md:py-32">
+      <section id="pricing" className="py-24 md:py-32 section-divider-shadow">
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp(0)} className="text-center mb-20">
             <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Preços</span>
@@ -256,13 +277,13 @@ export default function LandingPage() {
               Comece grátis e evolua conforme sua criação cresce.
             </p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 items-center max-w-6xl mx-auto px-4 md:px-0">
             {plans.map((plan, i) => (
               <motion.div
                 key={plan.name}
                 {...fadeUp(i * 0.1)}
-                className={`relative p-8 glass transition-all duration-500 hover:-translate-y-2 ${
-                  plan.highlight ? "border-primary/50 ring-1 ring-primary/20 scale-105 z-20 shadow-2xl shadow-primary/10" : "z-10"
+                className={`relative p-8 glass transition-all duration-700 hover:-translate-y-2 ${
+                  plan.highlight ? "pro-plan-glow border-primary/50 ring-1 ring-primary/30 md:scale-110 z-20 shadow-3xl shadow-primary/20" : "z-10"
                 }`}
               >
                 {plan.highlight && (
@@ -308,7 +329,7 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 md:py-32 bg-secondary/20">
+      <section className="py-24 md:py-32 bg-secondary/20 section-divider-shadow">
         <div className="container mx-auto px-6 max-w-3xl">
           <motion.div {...fadeUp(0)} className="text-center mb-16">
             <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">FAQ</span>
