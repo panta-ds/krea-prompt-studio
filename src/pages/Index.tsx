@@ -49,8 +49,8 @@ const features = [
 ];
 
 const plans = [
-  { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["20 análises por mês", "Prompt JSON básico", "Biblioteca pessoal"], cta: "COMECE GRATUITAMENTE", highlight: false },
-  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Multi-idioma", "Editor avançado", "Galeria pública", "Suporte prioritário"], cta: "ACESSAR GRATUITAMENTE", highlight: true },
+  { name: "Free", price: "R$ 0", period: "/para sempre", desc: "Para experimentar sem compromisso.", features: ["20 análises por mês", "Prompt JSON básico", "Biblioteca pessoal"], cta: "Começar grátis", highlight: false },
+  { name: "Pro", price: "R$ 49", period: "/por mês", desc: "Para criadores que usam IA todos os dias.", features: ["200 análises por mês", "Multi-idioma", "Editor avançado", "Galeria pública", "Suporte prioritário"], cta: "Assinar Pro", highlight: true },
   { name: "Agency", price: "R$ 129", period: "/por mês", desc: "Para times e agências que produzem em escala.", features: ["Análises ilimitadas", "API de acesso direto", "Times e colaboração", "Exportação em massa", "Suporte dedicado"], cta: "Falar com a equipe", highlight: false },
 ];
 
@@ -278,16 +278,11 @@ export default function LandingPage() {
           </div>
 
           <motion.div {...fadeUp(0.5)} className="mt-20 text-center">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/signup">
-                <Button variant="glass" size="lg" className="btn-machine-green px-12 py-7 h-auto text-lg group">
-                  COMECE GRATUITAMENTE <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <a href="#pricing">
-                <Button variant="ghost" size="lg" className="px-8 py-7 h-auto text-lg text-muted-foreground hover:text-foreground">Ver Planos</Button>
-              </a>
-            </div>
+            <a href="#pricing">
+              <Button variant="glass" size="lg" className="btn-premium-glass btn-light-beam px-10 py-7 h-auto text-lg group">
+                Libere seu Potencial Criativo Agora <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -341,8 +336,8 @@ export default function LandingPage() {
 
               <div className="mt-12">
                 <a href="#pricing">
-                  <Button variant="glass" className="btn-machine-green px-8 py-6 h-auto group">
-                    ACESSAR GRATUITAMENTE <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <Button variant="glass" className="btn-premium-glass btn-light-beam px-8 py-6 h-auto group">
+                    Descobrir meu Potencial Agora <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </a>
               </div>
@@ -496,8 +491,8 @@ export default function LandingPage() {
                 <div className="mt-8">
                   <Link to="/signup">
                     <Button
-                      variant="glass"
-                      className="w-full btn-machine-green py-6 h-auto"
+                      variant={plan.highlight ? "glass" : "outline"}
+                      className="w-full"
                     >
                       {plan.cta}
                     </Button>
@@ -542,8 +537,8 @@ export default function LandingPage() {
           <motion.div {...fadeUp(0.2)} className="mt-16 text-center">
             <h3 className="font-heading text-lg font-medium text-foreground mb-6">Ainda tem dúvidas?</h3>
             <a href="#pricing">
-              <Button variant="glass" size="lg" className="btn-machine-green px-8 py-6 h-auto group">
-                ACESSAR GRATUITAMENTE <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <Button variant="glass" size="lg" className="btn-premium-glass btn-light-beam px-8 py-6 h-auto group">
+                Quero me Inscrever Agora <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </a>
           </motion.div>
