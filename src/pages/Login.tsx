@@ -4,14 +4,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = "/dashboard";
+    if (!email || !password) {
+      toast.error("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      toast.success("Login realizado com sucesso!");
+      window.location.href = "/dashboard";
+    } catch (error: any) {
+      console.error("Login error:", error.message);
+      toast.error(error.message || "Erro ao realizar login. Verifique suas credenciais.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    toast.info("Login com Google em desenvolvimento.");
   };
 
   return (
@@ -48,19 +78,35 @@ export default function LoginPage() {
                 className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground placeholder:text-muted-foreground"
               />
             </div>
-            <div>
+            <div className="relative">
               <Label htmlFor="password" className="text-sm text-foreground">Senha</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground placeholder:text-muted-foreground"
-              />
+              <div className="relative mt-2">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="bg-secondary border-border rounded-xl h-11 text-foreground placeholder:text-muted-foreground pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
-            <Button variant="glass" className="w-full h-11" type="submit">
-              Entrar
+            <Button variant="glass" className="w-full h-11" type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Entrando...
+                </>
+              ) : (
+                "Entrar"
+              )}
             </Button>
           </form>
 
@@ -73,7 +119,12 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <Button variant="outline" className="w-full mt-6 h-11 rounded-xl">
+          <Button 
+            variant="outline" 
+            className="w-full mt-6 h-11 rounded-xl" 
+            onClick={handleGoogleLogin}
+            disabled={loading}
+          >
             <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
               <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
               <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

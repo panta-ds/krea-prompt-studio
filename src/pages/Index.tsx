@@ -151,11 +151,11 @@ export default function LandingPage() {
               Envie uma foto e receba instantaneamente um prompt JSON estruturado, detalhado e pronto para recriar a imagem em Midjourney, DALL-E, Flux ou qualquer ferramenta de IA.
             </motion.p>
             <motion.div {...fadeUp(0.3)} className="mt-10 flex flex-col items-center">
-              <Link to="/login">
+              <a href="#pricing">
                 <Button variant="glass" size="lg" className="btn-machine-green px-12 py-7 h-auto text-lg group">
                   COMECE GRATUITAMENTE <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Button>
-              </Link>
+              </a>
               <p className="mt-4 text-xs text-muted-foreground">Sem cartão de crédito. Resultado em segundos.</p>
             </motion.div>
           </div>

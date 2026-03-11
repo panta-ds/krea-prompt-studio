@@ -30,7 +30,6 @@ export function Footer() {
                   Dashboard
                 </button>
               </li>
-              <li><Link to="/settings" className="hover:text-foreground transition-colors">Configurações</Link></li>
             </ul>
           </div>
           <div>
