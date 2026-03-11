@@ -535,10 +535,9 @@ export default function LandingPage() {
           </motion.div>
 
           <motion.div {...fadeUp(0.2)} className="mt-16 text-center">
-            <h3 className="font-heading text-lg font-medium text-foreground mb-6">Ainda tem dúvidas?</h3>
             <a href="#pricing">
-              <Button variant="glass" size="lg" className="btn-premium-glass btn-light-beam px-8 py-6 h-auto group">
-                Quero me Inscrever Agora <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <Button variant="glass" size="lg" className="btn-premium-glass btn-light-beam px-10 py-6 h-auto group bg-primary/10 hover:bg-primary/20 transition-all border-primary/20 hover:border-primary/40">
+                Ver planos <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </a>
           </motion.div>
