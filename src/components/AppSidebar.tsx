@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Sparkles, BookOpen, Compass, Users, Settings, LogOut } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
@@ -15,10 +16,13 @@ export function AppSidebar() {
 
   return (
     <aside className="hidden lg:flex flex-col w-64 min-h-screen glass-subtle p-6 border-r border-border">
-      <Link to="/" className="font-heading text-lg font-semibold tracking-tight mb-10">
-        <span className="text-foreground">Krea</span>
-        <span className="text-muted-foreground font-light">Prompts</span>
-      </Link>
+      <div className="flex items-center justify-between mb-10">
+        <Link to="/" className="font-heading text-lg font-semibold tracking-tight">
+          <span className="text-foreground">Krea</span>
+          <span className="text-muted-foreground font-light">Prompts</span>
+        </Link>
+        <ThemeToggle />
+      </div>
 
       <nav className="flex-1 space-y-1">
         {navItems.map((item) => {

@@ -61,7 +61,8 @@ export default function ExplorePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.05 }}
-              className="relative group break-inside-avoid mb-4 glass overflow-hidden"
+              whileHover={{ y: -5, scale: 1.01 }}
+              className="relative group break-inside-avoid mb-4 glass overflow-hidden hover:shadow-[0_0_30px_hsl(var(--primary)_/_0.2)] hover:border-primary/40 transition-all duration-500"
             >
               <img
                 src={item.image}

@@ -2,7 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Braces, Globe, Pencil, BookOpen, Users, Copy, Upload, Sparkles, FileJson } from "lucide-react";
 
 const fadeUp = (delay = 0) => ({
@@ -38,6 +38,11 @@ const sampleJson = `{
 }`;
 
 export default function LandingPage() {
+  const { scrollY } = useScroll();
+  const yOrb1 = useTransform(scrollY, [0, 1000], [0, 200]);
+  const yOrb2 = useTransform(scrollY, [0, 1000], [0, -150]);
+  const yMockup = useTransform(scrollY, [0, 1000], [0, 100]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -45,8 +50,8 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
         {/* Background orbs */}
-        <div className="bg-orb-blue -top-32 -left-32" />
-        <div className="bg-orb-purple -bottom-32 -right-32" />
+        <motion.div style={{ y: yOrb1 }} className="bg-orb-blue -top-32 -left-32" />
+        <motion.div style={{ y: yOrb2 }} className="bg-orb-purple -bottom-32 -right-32" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -75,6 +80,7 @@ export default function LandingPage() {
 
           {/* Hero Mockup */}
           <motion.div
+            style={{ y: yMockup }}
             {...fadeUp(0.4)}
             className="mt-20 max-w-5xl mx-auto"
           >
