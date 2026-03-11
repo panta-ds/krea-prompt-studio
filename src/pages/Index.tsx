@@ -292,50 +292,47 @@ export default function LandingPage() {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeUp(0)} className="order-2 lg:order-1">
-              <div className="relative rounded-[2rem] overflow-hidden aspect-video glass-subtle border border-white/10 shadow-2xl group">
-                {/* Video Player Header Overlay */}
-                <div className="absolute top-0 inset-x-0 h-10 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-4 z-20">
-                  <div className="flex gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-red-500/60" />
-                    <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
-                    <div className="w-2 h-2 rounded-full bg-green-500/60" />
-                  </div>
-                  <div className="text-[10px] text-white/40 font-mono tracking-widest uppercase">Tutorial: Análise de Imagem</div>
-                  <div className="w-10" />
-                </div>
-
-                {/* Dashboard Mockup Content */}
-                <div className="absolute inset-0 pt-10 flex bg-[#0d1117]">
+              <div className="relative rounded-[2rem] overflow-hidden aspect-video glass-subtle border border-white/10 shadow-2xl">
+                {/* Auto-looping Dashboard Simulation (GIF Style) */}
+                <div className="absolute inset-0 flex bg-[#0d1117]">
                   {/* Sidebar Simulation */}
                   <div className="w-16 border-r border-white/5 flex flex-col items-center py-4 gap-6 bg-black/20">
                     <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center"><Sparkles className="w-4 h-4 text-primary" /></div>
-                    <div className="w-8 h-8 rounded-lg bg-white/5" />
-                    <div className="w-8 h-8 rounded-lg bg-white/5" />
-                    <div className="w-8 h-8 rounded-lg bg-white/5" />
+                    <div className="w-8 h-8 rounded-lg bg-white/5 opacity-20" />
+                    <div className="w-8 h-8 rounded-lg bg-white/5 opacity-20" />
                   </div>
 
                   {/* Main Area Simulation */}
                   <div className="flex-1 flex flex-col overflow-hidden">
                     <div className="flex-1 p-6 flex gap-6 overflow-hidden">
                       {/* Image Upload Area */}
-                      <div className="flex-1 rounded-2xl border border-dashed border-white/10 flex flex-col items-center justify-center bg-black/40 relative overflow-hidden group/img">
-                        <img 
+                      <div className="flex-1 rounded-2xl border border-dashed border-white/10 flex flex-col items-center justify-center bg-black/40 relative overflow-hidden">
+                        <motion.img 
+                          initial={{ scale: 1.1 }}
+                          animate={{ scale: 1 }}
+                          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
                           src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&h=600&fit=crop" 
-                          alt="Análise" 
-                          className="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-[10s] group-hover/img:scale-125"
+                          alt="Analysis" 
+                          className="absolute inset-0 w-full h-full object-cover opacity-60"
                         />
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
                         
-                        {/* Scanning Line Animation */}
+                        {/* Scanning Line Animation - Auto Looping */}
                         <motion.div 
-                          initial={{ top: "0%" }}
-                          animate={{ top: "100%" }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                          className="absolute inset-x-0 h-0.5 bg-primary shadow-[0_0_15px_rgba(var(--primary),0.8)] z-10"
+                          initial={{ top: "-10%" }}
+                          animate={{ top: "110%" }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                          className="absolute inset-x-0 h-1 bg-primary shadow-[0_0_20px_rgba(var(--primary),0.8)] z-10"
                         />
 
                         <div className="relative z-20 text-center">
-                          <p className="text-[10px] font-mono text-primary animate-pulse uppercase tracking-widest">Analisando Imagem...</p>
+                          <motion.p 
+                            animate={{ opacity: [0.4, 1, 0.4] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="text-[10px] font-mono text-primary uppercase tracking-widest"
+                          >
+                            Extracting Metadata...
+                          </motion.p>
                         </div>
                       </div>
 
@@ -343,65 +340,46 @@ export default function LandingPage() {
                       <div className="w-[180px] md:w-[240px] flex flex-col gap-3">
                         <div className="flex-1 rounded-2xl bg-black/60 border border-white/5 p-4 font-mono text-[9px] md:text-[10px] text-blue-300 leading-tight relative overflow-hidden">
                           <div className="flex items-center gap-2 mb-3 border-b border-white/5 pb-2">
-                            <FileJson className="w-3 h-3 text-primary" />
-                            <span className="text-white/40">output.json</span>
+                            <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse" />
+                            <span className="text-white/20">LIVE_ANALYSIS</span>
                           </div>
                           
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ duration: 0.5, delay: 1 }}
+                          <motion.div 
                             className="space-y-1"
+                            initial="hidden"
+                            animate="visible"
+                            variants={{
+                              visible: { transition: { staggerChildren: 0.5 } }
+                            }}
                           >
-                            <span className="text-purple-400">"{'{'}"</span>
+                            <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-purple-400">"{'{'}"</motion.span>
                             <div className="pl-4 space-y-1">
-                              <div><span className="text-white/60">"subject":</span> <span className="text-green-400">"majestic peaks"</span>,</div>
-                              <div><span className="text-white/60">"style":</span> <span className="text-green-400">"digital art"</span>,</div>
-                              <div><span className="text-white/60">"lighting":</span> <span className="text-green-400">"vibrant rays"</span>,</div>
-                              <motion.div
-                                initial={{ opacity: 0, x: -5 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5, delay: 2, repeat: Infinity, repeatDelay: 5 }}
-                              >
-                                <span className="text-white/60">"details":</span> <span className="text-green-400">"masterpiece"</span>
+                              <motion.div variants={{ hidden: { opacity: 0, x: -5 }, visible: { opacity: 1, x: 0 } }}>
+                                <span className="text-white/60">"subject":</span> <span className="text-green-400">"majestic peaks"</span>,
+                              </motion.div>
+                              <motion.div variants={{ hidden: { opacity: 0, x: -5 }, visible: { opacity: 1, x: 0 } }}>
+                                <span className="text-white/60">"style":</span> <span className="text-green-400">"digital art"</span>,
+                              </motion.div>
+                              <motion.div variants={{ hidden: { opacity: 0, x: -5 }, visible: { opacity: 1, x: 0 } }}>
+                                <span className="text-white/60">"lighting":</span> <span className="text-green-400">"volumetric"</span>,
+                              </motion.div>
+                              <motion.div variants={{ hidden: { opacity: 0, x: -5 }, visible: { opacity: 1, x: 0 } }}>
+                                <span className="text-white/60">"atmosphere":</span> <span className="text-green-400">"ethereal"</span>
                               </motion.div>
                             </div>
-                            <span className="text-purple-400">"{'}'}"</span>
+                            <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-purple-400">"{'}'}"</motion.span>
                           </motion.div>
 
-                          {/* Blinking Cursor */}
-                          <motion.div 
-                            animate={{ opacity: [0, 1, 0] }}
-                            transition={{ duration: 0.8, repeat: Infinity }}
-                            className="w-1.5 h-3 bg-primary inline-block ml-1"
-                          />
+                          <div className="absolute bottom-4 right-4">
+                            <motion.div 
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                              className="w-4 h-4 border-2 border-primary/20 border-t-primary rounded-full"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-
-                    {/* Footer Progress Bar Controls */}
-                    <div className="h-12 bg-black/60 border-t border-white/5 flex items-center px-6 gap-6">
-                      <div className="flex items-center gap-4 text-white/60">
-                         <div className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center"><div className="w-1.5 h-1.5 rounded-full bg-primary" /></div>
-                         <div className="w-0.5 h-4 bg-white/5" />
-                         <span className="text-[10px] font-mono">00:42 / 01:00</span>
-                      </div>
-                      <div className="flex-1 h-1 bg-white/5 rounded-full relative overflow-hidden">
-                        <motion.div 
-                          initial={{ width: "0%" }}
-                          animate={{ width: "70%" }}
-                          transition={{ duration: 4, repeat: Infinity, repeatDelay: 1 }}
-                          className="absolute inset-y-0 left-0 bg-primary/40"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Play Button Overlay on Hover */}
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30 pointer-events-none">
-                  <div className="w-16 h-16 rounded-full bg-primary/20 backdrop-blur-xl border border-primary/30 flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-500">
-                    <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-primary border-b-[10px] border-b-transparent ml-1" />
                   </div>
                 </div>
               </div>
@@ -428,16 +406,16 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
-
-              <div className="mt-12">
-                <a href="#pricing">
-                  <Button variant="glass" className="btn-premium-glass btn-light-beam px-8 py-6 h-auto group">
-                    Descobrir meu Potencial Agora <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </a>
-              </div>
             </motion.div>
           </div>
+
+          <motion.div {...fadeUp(0.3)} className="mt-20 text-center">
+            <a href="#pricing">
+              <Button variant="glass" className="btn-machine-green btn-light-beam px-10 py-7 h-auto group text-lg font-medium">
+                Descobrir meu Potencial Agora <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </a>
+          </motion.div>
         </div>
       </section>
 
@@ -557,8 +535,8 @@ export default function LandingPage() {
               <motion.div
                 key={plan.name}
                 {...fadeUp(i * 0.1)}
-                className={`relative p-8 glass transition-all duration-700 hover:-translate-y-2 border-beam-container ${
-                  plan.highlight ? "pro-plan-glow border-primary/50 ring-1 ring-primary/30 md:scale-110 z-20 shadow-3xl shadow-primary/20" : "z-10"
+                className={`relative p-8 glass transition-all duration-700 hover:-translate-y-2 border-beam-container mt-8 md:mt-0 ${
+                  plan.highlight ? "pro-plan-glow border-primary/50 ring-1 ring-primary/30 md:scale-110 z-20 shadow-3xl shadow-primary/20 mb-8 md:mb-0" : "z-10"
                 }`}
               >
                 {plan.highlight && <div className="border-beam" />}

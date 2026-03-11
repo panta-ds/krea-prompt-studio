@@ -20,15 +20,12 @@ export function Footer() {
               <li><Link to="/login" className="hover:text-foreground transition-colors">Entrar</Link></li>
               <li><Link to="/signup" className="hover:text-foreground transition-colors">Criar conta</Link></li>
               <li>
-                <button 
-                  onClick={() => {
-                    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-                    window.location.href = isLoggedIn ? "/dashboard" : "/login";
-                  }}
-                  className="hover:text-foreground transition-colors text-left"
+                <Link 
+                  to="/dashboard"
+                  className="hover:text-foreground transition-colors"
                 >
                   Dashboard
-                </button>
+                </Link>
               </li>
             </ul>
           </div>

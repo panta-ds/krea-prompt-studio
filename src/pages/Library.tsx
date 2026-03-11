@@ -57,15 +57,15 @@ export default function LibraryPage() {
                     <span className="text-[10px] px-2 py-0.5 rounded-full glass-subtle text-muted-foreground">{item.language}</span>
                   </div>
                   <p className="text-xs text-muted-foreground">{item.date}</p>
-                  <div className="flex gap-1 mt-3">
-                    <Button variant="ghost" size="sm" className="flex-1 text-xs" onClick={() => toast.info("Visualizando...")}>
-                      <Eye className="w-3 h-3 mr-1" /> Ver
+                  <div className="flex gap-2 mt-4">
+                    <Button variant="ghost" size="sm" className="flex-1 h-9 text-xs py-5" onClick={() => toast.info("Visualizando...")}>
+                      <Eye className="w-4 h-4 mr-2" /> Ver
                     </Button>
-                    <Button variant="ghost" size="sm" className="flex-1 text-xs" onClick={() => { navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2)); toast.success("Copiado!"); }}>
-                      <Copy className="w-3 h-3 mr-1" /> Copiar
+                    <Button variant="ghost" size="sm" className="flex-1 h-9 text-xs py-5" onClick={() => { navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2)); toast.success("Copiado!"); }}>
+                      <Copy className="w-4 h-4 mr-2" /> Copiar
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-xs text-destructive" onClick={() => toast.success("Removido!")}>
-                      <Trash2 className="w-3 h-3" />
+                    <Button variant="ghost" size="sm" className="h-9 w-10 py-5 text-destructive" onClick={() => toast.success("Removido!")}>
+                      <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
