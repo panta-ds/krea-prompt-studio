@@ -152,8 +152,8 @@ export default function LandingPage() {
             </motion.p>
             <motion.div {...fadeUp(0.3)} className="mt-10 flex flex-col items-center">
               <Link to="/login">
-                <Button variant="glass" size="lg" className="text-base btn-traveling-glow px-8 py-6 h-auto">
-                  Criar meu primeiro prompt grátis
+                <Button variant="glass" size="lg" className="btn-machine-green px-12 py-7 h-auto text-lg group">
+                  COMECE GRATUITAMENTE <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <p className="mt-4 text-xs text-muted-foreground">Sem cartão de crédito. Resultado em segundos.</p>
@@ -491,8 +491,8 @@ export default function LandingPage() {
                 <div className="mt-8">
                   <Link to="/signup">
                     <Button
-                      variant={plan.highlight ? "glass" : "outline"}
-                      className="w-full"
+                      variant={plan.name === "Pro" ? "glass" : (plan.highlight ? "glass" : "outline")}
+                      className={`w-full py-6 h-auto ${plan.name === "Pro" ? "btn-machine-green" : ""}`}
                     >
                       {plan.cta}
                     </Button>
