@@ -163,6 +163,49 @@
   box-shadow: 0 0 30px hsl(228 100% 72% / 0.3), inset 0 0 10px hsl(228 100% 72% / 0.2);
 }
 
+.btn-traveling-glow {
+  position: relative;
+  overflow: hidden;
+  background: hsl(var(--glass-bg));
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.btn-traveling-glow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 300%;
+  aspect-ratio: 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 120deg,
+    hsl(var(--primary)) 180deg,
+    transparent 240deg,
+    transparent 360deg
+  );
+  translate: -50% -50%;
+  animation: rotate 4s linear infinite;
+  z-index: -1;
+}
+
+.btn-traveling-glow::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: inherit;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
 /* Background gradient orbs */
 .bg-orb-blue {
   position: absolute;

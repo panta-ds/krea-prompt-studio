@@ -11,23 +11,34 @@ export function Footer() {
               <span className="text-muted-foreground font-light">Prompts</span>
             </span>
             <p className="mt-4 text-sm text-muted-foreground max-w-sm leading-relaxed">
-              Transforme qualquer imagem em prompts de IA perfeitos. Plataforma premium para criadores exigentes.
+              Transforme qualquer imagem no prompt perfeito. A plataforma de prompts para criadores que exigem precisão.
             </p>
           </div>
           <div>
             <h4 className="font-heading text-sm font-medium mb-4 text-foreground">Produto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="/#features" className="hover:text-foreground transition-colors">Features</a></li>
+              <li><a href="/#features" className="hover:text-foreground transition-colors">Recursos</a></li>
               <li><a href="/#pricing" className="hover:text-foreground transition-colors">Preços</a></li>
               <li><Link to="/explore" className="hover:text-foreground transition-colors">Galeria</Link></li>
+              <li><a href="#" className="hover:text-foreground transition-colors">Blog</a></li>
             </ul>
           </div>
           <div>
             <h4 className="font-heading text-sm font-medium mb-4 text-foreground">Conta</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/login" className="hover:text-foreground transition-colors">Entrar</Link></li>
-              <li><Link to="/signup" className="hover:text-foreground transition-colors">Criar Conta</Link></li>
+              <li><Link to="/signup" className="hover:text-foreground transition-colors">Criar conta</Link></li>
               <li><Link to="/dashboard" className="hover:text-foreground transition-colors">Dashboard</Link></li>
+              <li><Link to="/settings" className="hover:text-foreground transition-colors">Configurações</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-heading text-sm font-medium mb-4 text-foreground">Empresa</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><a href="#" className="hover:text-foreground transition-colors">Sobre</a></li>
+              <li><a href="#" className="hover:text-foreground transition-colors">Contato</a></li>
+              <li><a href="#" className="hover:text-foreground transition-colors">Termos de uso</a></li>
+              <li><a href="#" className="hover:text-foreground transition-colors">Privacidade</a></li>
             </ul>
           </div>
         </div>

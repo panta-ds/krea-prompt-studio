@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Features", href: "/#features" },
+  { label: "Recursos", href: "/#features" },
   { label: "Galeria", href: "/#gallery" },
   { label: "Preços", href: "/#pricing" },
 ];
@@ -51,7 +51,7 @@ export function Navbar() {
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Entrar</Button>
             </Link>
             <Link to="/signup">
-              <Button variant="glass" size="sm">Começar Grátis</Button>
+              <Button variant="glass" size="sm">Começar grátis</Button>
             </Link>
           </div>
           <Button 
@@ -111,7 +111,7 @@ export function Navbar() {
                 <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">Entrar</Button>
               </Link>
               <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="glass" className="w-full justify-start mt-2">Começar Grátis</Button>
+                <Button variant="glass" className="w-full justify-start mt-2">Começar grátis</Button>
               </Link>
             </div>
           </motion.div>
