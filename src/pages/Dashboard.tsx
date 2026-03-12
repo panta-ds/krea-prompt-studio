@@ -17,23 +17,48 @@ const fadeUp = (delay = 0) => ({
 export default function DashboardPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [analyses, setAnalyses] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkSession = async () => {
+    const fetchData = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate("/login");
-      } else {
-        setUser(session.user);
+        return;
       }
+      
+      setUser(session.user);
+
+      // Buscar perfil
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
+        .single();
+      
+      setProfile(profileData);
+
+      // Buscar análises recentes
+      const { data: analysesData } = await supabase
+        .from('analyses')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false })
+        .limit(3);
+      
+      setAnalyses(analysesData || []);
+      setLoading(false);
     };
-    checkSession();
+    
+    fetchData();
   }, [navigate]);
 
   const stats = [
-    { icon: BarChart3, label: "Análises este mês", value: "12" },
-    { icon: BookOpen, label: "Prompts salvos", value: "47" },
-    { icon: Zap, label: "Créditos restantes", value: "188" },
+    { icon: BarChart3, label: "Análises totais", value: analyses.length.toString() },
+    { icon: BookOpen, label: "Prompts na biblioteca", value: analyses.length.toString() },
+    { icon: Zap, label: "Créditos restantes", value: profile?.credits?.toString() || "0" },
   ];
 
   return (
@@ -83,33 +108,49 @@ export default function DashboardPage() {
         {/* Recent */}
         <motion.div {...fadeUp(0.3)} className="mt-10">
           <h2 className="font-heading text-lg font-medium text-foreground mb-6 tracking-[-0.02em]">Análises Recentes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {mockAnalyses.map((item) => (
-              <div key={item.id} className="glass overflow-hidden group hover:-translate-y-1 hover:border-foreground/16 transition-all duration-300">
-                <div className="aspect-video relative overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                </div>
-                <div className="p-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-foreground">{item.title}</h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full glass-subtle text-muted-foreground">{item.language}</span>
+          {analyses.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {analyses.map((item) => (
+                <div key={item.id} className="glass overflow-hidden group hover:-translate-y-1 hover:border-foreground/16 transition-all duration-300">
+                  <div className="aspect-video relative overflow-hidden">
+                    <img 
+                      src={item.image_url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      loading="lazy" 
+                    />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">{item.date}</p>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="mt-3 w-full text-xs"
-                    onClick={() => {
-                      navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2));
-                      toast.success("Prompt copiado!");
-                    }}
-                  >
-                    <Copy className="w-3 h-3 mr-1" /> Copiar prompt
-                  </Button>
+                  <div className="p-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-medium text-foreground">{item.title}</h3>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full glass-subtle text-muted-foreground">{item.language}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {new Date(item.created_at).toLocaleDateString('pt-BR')}
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-3 w-full text-xs"
+                      onClick={() => {
+                        navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2));
+                        toast.success("Prompt copiado!");
+                      }}
+                    >
+                      <Copy className="w-3 h-3 mr-1" /> Copiar prompt
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="py-12 glass border-dashed text-center">
+              <p className="text-sm text-muted-foreground">Você ainda não realizou nenhuma análise.</p>
+              <Link to="/analyze">
+                <Button variant="link" className="text-primary mt-2">Começar agora</Button>
+              </Link>
+            </div>
+          )}
         </motion.div>
       </main>
       <div className="noise-overlay" />

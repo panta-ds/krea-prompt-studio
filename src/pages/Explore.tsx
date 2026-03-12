@@ -25,6 +25,23 @@ export default function ExplorePage() {
 
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState(0);
+  const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPublicAnalyses = async () => {
+      const { data } = await supabase
+        .from('analyses')
+        .select('*')
+        .eq('is_public', true)
+        .order('created_at', { ascending: false });
+      
+      setItems(data || []);
+      setLoading(false);
+    };
+    
+    fetchPublicAnalyses();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -67,40 +84,52 @@ export default function ExplorePage() {
         </div>
 
         {/* Masonry grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
-          {mockGalleryItems.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -5, scale: 1.01 }}
-              className="relative group break-inside-avoid mb-4 glass overflow-hidden hover:shadow-[0_0_30px_hsl(var(--primary)_/_0.2)] hover:border-primary/40 transition-all duration-500"
-            >
-              <img
-                src={item.image}
-                alt="Galeria"
-                className="w-full block rounded-lg"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 rounded-lg">
-                <pre className="font-mono text-[10px] text-muted-foreground max-h-32 overflow-hidden mb-4 text-center">
-                  {JSON.stringify(item.prompt, null, 2).slice(0, 200)}...
-                </pre>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2));
-                    toast.success("Prompt copiado!");
-                  }}
-                  className="flex items-center gap-1 px-4 py-2 rounded-xl btn-glow text-foreground text-xs font-medium"
-                >
-                  <Copy className="w-3 h-3" /> Copiar
-                </button>
-                <span className="text-[10px] text-muted-foreground mt-2">{item.copies} cópias</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="glass h-64 animate-pulse bg-secondary/20" />
+            ))}
+          </div>
+        ) : items.length > 0 ? (
+          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+            {items.map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -5, scale: 1.01 }}
+                className="relative group break-inside-avoid mb-4 glass overflow-hidden hover:shadow-[0_0_30px_hsl(var(--primary)_/_0.2)] hover:border-primary/40 transition-all duration-500"
+              >
+                <img
+                  src={item.image_url}
+                  alt="Galeria"
+                  className="w-full block rounded-lg"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 rounded-lg">
+                  <pre className="font-mono text-[10px] text-muted-foreground max-h-32 overflow-hidden mb-4 text-center">
+                    {JSON.stringify(item.prompt, null, 2).slice(0, 200)}...
+                  </pre>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(JSON.stringify(item.prompt, null, 2));
+                      toast.success("Prompt copiado!");
+                    }}
+                    className="flex items-center gap-1 px-4 py-2 rounded-xl btn-glow text-foreground text-xs font-medium"
+                  >
+                    <Copy className="w-3 h-3" /> Copiar
+                  </button>
+                  <span className="text-[10px] text-muted-foreground mt-2">visto publicamente</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="py-20 text-center glass border-dashed">
+            <p className="text-muted-foreground">Nenhuma galeria pública disponível no momento.</p>
+          </div>
+        )}
       </main>
       <div className="noise-overlay" />
     </div>

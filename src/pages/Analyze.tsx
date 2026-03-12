@@ -38,18 +38,49 @@ export default function AnalyzePage() {
     if (file) processFile(file);
   };
 
-  const processFile = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setImage(e.target?.result as string);
+  const processFile = async (file: File) => {
+    try {
       setAnalyzing(true);
       setResult(null);
-      setTimeout(() => {
-        setResult(mockJsonPrompt);
-        setAnalyzing(false);
-      }, 2500);
-    };
-    reader.readAsDataURL(file);
+
+      // Simular análise (mantendo o mock por enquanto, mas salvando no DB)
+      // Em um cenário real, aqui chamaríamos a API de análise
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64Image = e.target?.result as string;
+        setImage(base64Image);
+        
+        setTimeout(async () => {
+          const mockResult = mockJsonPrompt;
+          setResult(mockResult);
+          setAnalyzing(false);
+
+          // Salvar no Supabase
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session) {
+            const { error } = await supabase.from('analyses').insert({
+              user_id: session.user.id,
+              title: file.name.split('.')[0] || "Nova Análise",
+              image_url: base64Image, // Nota: Idealmente faríamos upload no bucket 'images'
+              prompt: mockResult,
+              language: language,
+              is_public: false
+            });
+
+            if (error) {
+              console.error("Erro ao salvar análise:", error.message);
+              toast.error("Análise concluída, mas erro ao salvar na biblioteca.");
+            } else {
+              toast.success("Análise salva na sua biblioteca!");
+            }
+          }
+        }, 2500);
+      };
+      reader.readAsDataURL(file);
+    } catch (error: any) {
+      toast.error("Erro ao processar imagem.");
+      setAnalyzing(false);
+    }
   };
 
   const formatJson = (obj: object) => JSON.stringify(obj, null, 2);
