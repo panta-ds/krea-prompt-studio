@@ -9,7 +9,7 @@ import { toast } from "sonner";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: "easeOut" as const },
+  transition: { duration: 0.8, delay, ease: [0.23, 1, 0.32, 1] as any },
 });
 
 export default function DashboardPage() {

@@ -103,10 +103,10 @@ export default function AnalyzePage() {
                 <img src={image} alt="Imagem enviada" className={`w-full h-full object-contain transition-all duration-1000 ${analyzing ? "grayscale" : ""}`} />
                 {analyzing && (
                   <motion.div
-                    className="absolute left-0 right-0 h-[2px] bg-primary shadow-[0_0_12px_hsl(228_100%_72%_/_0.5)]"
+                    className="absolute left-0 right-0 h-[3px] bg-primary shadow-[0_0_20px_rgba(var(--primary),0.8)] z-10"
                     initial={{ top: "0%" }}
                     animate={{ top: "100%" }}
-                    transition={{ duration: 2.5, ease: "linear" }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                   />
                 )}
               </div>

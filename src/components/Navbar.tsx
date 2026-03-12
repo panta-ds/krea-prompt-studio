@@ -6,10 +6,10 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Recursos", href: "/#features" },
-  { label: "Galeria", href: "/#gallery" },
-  { label: "Preços", href: "/#pricing" },
-  { label: "Contato", href: "/#contact" },
+  { label: "Recursos", href: "/#features", isExternal: false },
+  { label: "Galeria", href: "/#gallery", isExternal: false },
+  { label: "Preços", href: "/#pricing", isExternal: false },
+  { label: "Contato", href: "/contact", isExternal: true },
 ];
 
 export function Navbar() {
@@ -33,15 +33,25 @@ export function Navbar() {
 
         {isLanding && (
           <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => 
+              link.isExternal ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
         )}
 
@@ -97,16 +107,27 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col space-y-4">
-              {isLanding && navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {isLanding && navLinks.map((link) => 
+                link.isExternal ? (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
               <div className="h-px w-full bg-border my-4" />
               <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">Entrar</Button>

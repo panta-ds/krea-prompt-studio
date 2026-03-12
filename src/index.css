@@ -105,7 +105,10 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased overflow-x-hidden;
+    @apply bg-background text-foreground font-inter antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
     font-feature-settings: 'cv01', 'cv02', 'tnum';
   }
 

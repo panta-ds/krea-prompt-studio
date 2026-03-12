@@ -32,11 +32,11 @@ const ParticleBackground = () => (
   </div>
 );
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 16 },
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, delay, ease: "easeOut" as const },
+  viewport: { once: true, margin: "-100px" },
+  transition: { duration: 1, delay, ease: [0.23, 1, 0.32, 1] as any },
 });
 
 const features = [
@@ -562,7 +562,7 @@ export default function LandingPage() {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <Link to="/signup">
+                  <Link to={plan.name === "Agency" ? "/contact" : "/signup"}>
                     <Button
                       variant={plan.name === "Pro" ? "glass" : (plan.highlight ? "glass" : "outline")}
                       className={`w-full py-6 h-auto ${plan.name === "Pro" ? "btn-machine-green" : ""}`}
