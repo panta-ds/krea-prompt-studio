@@ -229,60 +229,30 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Mini Gallery Carousel */}
-      <section id="gallery" className="py-24 bg-secondary/30 section-divider-shadow">
-        <div className="container mx-auto px-6 mb-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="max-w-xl">
-              <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Galeria em destaque</span>
-              <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em]">
-                Resultados reais dos nossos usuários
-              </h2>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-4">
-              {[...carouselImages, ...carouselImages].map((img, i) => (
-                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
-                  <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20 relative">
-                    <img 
-                      src={img.url} 
-                      alt="Carousel item" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-background/90 hover-slide-meta flex items-end p-6 overflow-auto">
-                      <pre className="text-[10px] text-primary font-mono leading-tight whitespace-pre-wrap">
-                        {img.prompt}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="overflow-hidden" ref={emblaRef2}>
-            <div className="flex gap-4">
-              {[...carouselImages2, ...carouselImages2].map((img, i) => (
-                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
-                  <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20 relative">
-                    <img 
-                      src={img.url} 
-                      alt="Carousel item" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-background/90 hover-slide-meta flex items-end p-6 overflow-auto">
-                      <pre className="text-[10px] text-primary font-mono leading-tight whitespace-pre-wrap">
-                        {img.prompt}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Features */}
+      <section id="features" className="py-24 md:py-32 section-divider-shadow">
+        <div className="container mx-auto px-6">
+          <motion.div {...fadeUp(0)} className="text-center mb-20">
+            <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Recursos</span>
+            <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em] mb-4">
+              Tudo que um criador precisa
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Desenvolvido para quem leva criação com IA a sério.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            {features.map((f, i) => (
+              <motion.div
+                key={f.title}
+                {...fadeUp(i * 0.08)}
+                className="p-8 glass hover:-translate-y-1 hover:border-foreground/16 transition-all duration-300"
+              >
+                <f.icon className="w-5 h-5 text-primary mb-4" />
+                <h3 className="font-heading text-base font-medium text-foreground mb-2">{f.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -419,30 +389,60 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-24 md:py-32 section-divider-shadow">
-        <div className="container mx-auto px-6">
-          <motion.div {...fadeUp(0)} className="text-center mb-20">
-            <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Recursos</span>
-            <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em] mb-4">
-              Tudo que um criador precisa
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Desenvolvido para quem leva criação com IA a sério.
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            {features.map((f, i) => (
-              <motion.div
-                key={f.title}
-                {...fadeUp(i * 0.08)}
-                className="p-8 glass hover:-translate-y-1 hover:border-foreground/16 transition-all duration-300"
-              >
-                <f.icon className="w-5 h-5 text-primary mb-4" />
-                <h3 className="font-heading text-base font-medium text-foreground mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
+      {/* Mini Gallery Carousel */}
+      <section id="gallery" className="py-24 bg-secondary/30 section-divider-shadow">
+        <div className="container mx-auto px-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <span className="text-primary font-mono text-sm uppercase tracking-wider mb-2 block">Galeria em destaque</span>
+              <h2 className="font-heading text-2xl md:text-4xl font-medium text-foreground tracking-[-0.02em]">
+                Resultados reais dos nossos usuários
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-4">
+              {[...carouselImages, ...carouselImages].map((img, i) => (
+                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
+                  <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20 relative">
+                    <img 
+                      src={img.url} 
+                      alt="Carousel item" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-background/90 hover-slide-meta flex items-end p-6 overflow-auto">
+                      <pre className="text-[10px] text-primary font-mono leading-tight whitespace-pre-wrap">
+                        {img.prompt}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="overflow-hidden" ref={emblaRef2}>
+            <div className="flex gap-4">
+              {[...carouselImages2, ...carouselImages2].map((img, i) => (
+                <div key={i} className="flex-[0_0_80%] sm:flex-[0_0_35%] lg:flex-[0_0_20%] min-w-0">
+                  <div className="glass rounded-xl overflow-hidden aspect-[4/5] group cursor-pointer border-border/20 relative">
+                    <img 
+                      src={img.url} 
+                      alt="Carousel item" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-background/90 hover-slide-meta flex items-end p-6 overflow-auto">
+                      <pre className="text-[10px] text-primary font-mono leading-tight whitespace-pre-wrap">
+                        {img.prompt}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

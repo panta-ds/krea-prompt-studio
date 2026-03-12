@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Recursos", href: "/#features", isExternal: false },
   { label: "Galeria", href: "/#gallery", isExternal: false },
+  { label: "Recursos", href: "/#features", isExternal: false },
   { label: "Preços", href: "/#pricing", isExternal: false },
   { label: "Contato", href: "/contact", isExternal: false },
 ];
