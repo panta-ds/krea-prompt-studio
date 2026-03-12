@@ -5,7 +5,7 @@ import { mockAnalyses } from "@/lib/mockData";
 import { motion } from "framer-motion";
 import { Upload, BarChart3, BookOpen, Zap, Copy } from "lucide-react";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
 const fadeUp = (delay = 0) => ({
@@ -16,12 +16,15 @@ const fadeUp = (delay = 0) => ({
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate("/login");
+      } else {
+        setUser(session.user);
       }
     };
     checkSession();
@@ -50,7 +53,7 @@ export default function DashboardPage() {
 
         <motion.div {...fadeUp(0)}>
           <h1 className="font-heading text-2xl md:text-3xl font-semibold text-foreground tracking-[-0.02em]">
-            Olá, <span className="text-gradient">Criador</span>
+            Olá, <span className="text-gradient">{user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Criador"}</span>
           </h1>
           <p className="text-muted-foreground mt-2 text-sm">Bem-vindo ao seu estúdio de prompts.</p>
         </motion.div>

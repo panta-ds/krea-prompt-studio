@@ -14,11 +14,15 @@ const tabs = ["Perfil", "Segurança", "Idioma", "Notificações", "Faturamento"]
 export default function SettingsPage() {
   const navigate = useNavigate();
 
+  const [user, setUser] = useState<any>(null);
+
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate("/login");
+      } else {
+        setUser(session.user);
       }
     };
     checkSession();
@@ -71,7 +75,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <Label className="text-foreground text-sm">Nome de usuário</Label>
-                <Input defaultValue="criador" className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground" />
+                <Input defaultValue={user?.user_metadata?.full_name || user?.email?.split('@')[0] || "criador"} className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground" />
               </div>
               <div>
                 <Label className="text-foreground text-sm">Bio</Label>
@@ -85,7 +89,7 @@ export default function SettingsPage() {
             <div className="space-y-6">
               <div>
                 <Label className="text-foreground text-sm">Email atual</Label>
-                <Input defaultValue="criador@email.com" className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground" />
+                <Input defaultValue={user?.email || "criador@email.com"} className="mt-2 bg-secondary border-border rounded-xl h-11 text-foreground" />
               </div>
               <div>
                 <Label className="text-foreground text-sm">Nova senha</Label>
