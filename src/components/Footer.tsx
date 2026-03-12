@@ -6,10 +6,10 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
-            <span className="font-heading text-xl font-semibold tracking-tight">
+            <Link to="/" className="font-heading text-xl font-semibold tracking-tight hover:opacity-80 transition-opacity">
               <span className="text-foreground">Krea</span>
               <span className="text-muted-foreground font-light">Prompts</span>
-            </span>
+            </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-sm leading-relaxed">
               Transforme qualquer imagem no prompt perfeito. A plataforma de prompts para criadores que exigem precisão.
             </p>
@@ -41,7 +41,6 @@ export function Footer() {
         </div>
         <div className="mt-16 pt-8 border-t border-border text-center text-xs text-muted-foreground flex flex-col items-center gap-2">
           <span>© {new Date().getFullYear()} KreaPrompts. Todos os direitos reservados.</span>
-          <span className="opacity-30">v1.0.2 (Deploy-Sync-Fixed)</span>
         </div>
       </div>
     </footer>

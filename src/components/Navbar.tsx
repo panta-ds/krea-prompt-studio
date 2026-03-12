@@ -26,10 +26,10 @@ export function Navbar() {
         className="fixed top-4 inset-x-0 z-50 flex justify-center w-full px-4 md:px-6"
       >
       <nav className="glass flex w-full max-w-5xl h-14 items-center justify-between px-4 sm:px-6 rounded-2xl mx-auto">
-        <a href="#top" className="font-heading text-lg font-semibold tracking-tight">
+        <Link to="/" className="font-heading text-lg font-semibold tracking-tight">
           <span className="text-foreground font-semibold">Krea</span>
           <span className="text-muted-foreground font-light">Prompts</span>
-        </a>
+        </Link>
 
         {isLanding && (
           <div className="hidden md:flex items-center gap-6">
