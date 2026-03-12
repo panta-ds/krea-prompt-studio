@@ -29,6 +29,7 @@ export function Navbar() {
         <a href="#top" className="font-heading text-lg font-semibold tracking-tight">
           <span className="text-foreground font-semibold">Krea</span>
           <span className="text-muted-foreground font-light">Prompts</span>
+          <span className="text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded ml-2 font-mono">DEBUG_v1.0.2</span>
         </a>
 
         {isLanding && (
