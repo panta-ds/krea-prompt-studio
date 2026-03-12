@@ -31,37 +31,35 @@ export function Navbar() {
           <span className="text-muted-foreground font-light">Prompts</span>
         </Link>
 
-        {isLanding && (
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => 
-              link.isExternal ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
-              ) : link.href.startsWith("/#") ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
-          </div>
-        )}
+        <div className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => 
+            link.isExternal ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            ) : link.href.startsWith("/#") ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
+        </div>
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
@@ -115,7 +113,7 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col space-y-4">
-              {isLanding && navLinks.map((link) => 
+              {navLinks.map((link) => 
                 link.isExternal ? (
                   <a
                     key={link.href}
