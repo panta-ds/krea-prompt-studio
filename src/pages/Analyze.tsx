@@ -7,6 +7,7 @@ import { Upload, Copy, FileText, BookmarkPlus, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
+import { analyzeImage } from "@/lib/gemini";
 
 export default function AnalyzePage() {
   const navigate = useNavigate();
@@ -43,16 +44,15 @@ export default function AnalyzePage() {
       setAnalyzing(true);
       setResult(null);
 
-      // Simular análise (mantendo o mock por enquanto, mas salvando no DB)
-      // Em um cenário real, aqui chamaríamos a API de análise
       const reader = new FileReader();
       reader.onload = async (e) => {
         const base64Image = e.target?.result as string;
         setImage(base64Image);
         
-        setTimeout(async () => {
-          const mockResult = mockJsonPrompt;
-          setResult(mockResult);
+        try {
+          // Chamada REAL para o Gemini
+          const geminiResult = await analyzeImage(base64Image, language);
+          setResult(geminiResult);
           setAnalyzing(false);
 
           // Salvar no Supabase
@@ -61,8 +61,8 @@ export default function AnalyzePage() {
             const { error } = await supabase.from('analyses').insert({
               user_id: session.user.id,
               title: file.name.split('.')[0] || "Nova Análise",
-              image_url: base64Image, // Nota: Idealmente faríamos upload no bucket 'images'
-              prompt: mockResult,
+              image_url: base64Image,
+              prompt: geminiResult,
               language: language,
               is_public: false
             });
@@ -71,10 +71,14 @@ export default function AnalyzePage() {
               console.error("Erro ao salvar análise:", error.message);
               toast.error("Análise concluída, mas erro ao salvar na biblioteca.");
             } else {
-              toast.success("Análise salva na sua biblioteca!");
+              toast.success("Análise concluída com IA!");
             }
           }
-        }, 2500);
+        } catch (apiError: any) {
+          console.error("Erro na API Gemini:", apiError);
+          toast.error("Erro na análise via IA. Tente novamente.");
+          setAnalyzing(false);
+        }
       };
       reader.readAsDataURL(file);
     } catch (error: any) {
