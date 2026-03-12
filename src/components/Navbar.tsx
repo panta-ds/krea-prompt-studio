@@ -9,7 +9,7 @@ const navLinks = [
   { label: "Recursos", href: "/#features", isExternal: false },
   { label: "Galeria", href: "/#gallery", isExternal: false },
   { label: "Preços", href: "/#pricing", isExternal: false },
-  { label: "Contato", href: "/contact", isExternal: true },
+  { label: "Contato", href: "/contact", isExternal: false },
 ];
 
 export function Navbar() {
@@ -42,7 +42,7 @@ export function Navbar() {
                 >
                   {link.label}
                 </a>
-              ) : (
+              ) : link.href.startsWith("/#") ? (
                 <a
                   key={link.href}
                   href={link.href}
@@ -50,6 +50,14 @@ export function Navbar() {
                 >
                   {link.label}
                 </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+                >
+                  {link.label}
+                </Link>
               )
             )}
           </div>
@@ -117,7 +125,7 @@ export function Navbar() {
                   >
                     {link.label}
                   </a>
-                ) : (
+                ) : link.href.startsWith("/#") ? (
                   <a
                     key={link.href}
                     href={link.href}
@@ -126,6 +134,15 @@ export function Navbar() {
                   >
                     {link.label}
                   </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </Link>
                 )
               )}
               <div className="h-px w-full bg-border my-4" />
