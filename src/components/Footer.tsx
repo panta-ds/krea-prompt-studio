@@ -41,7 +41,7 @@ export function Footer() {
         </div>
         <div className="mt-16 pt-8 border-t border-border text-center text-xs text-muted-foreground flex flex-col items-center gap-2">
           <span>© {new Date().getFullYear()} KreaPrompts. Todos os direitos reservados.</span>
-          <span className="opacity-30">v1.0.1</span>
+          <span className="opacity-30">v1.0.2 (Deploy-Sync-Fixed)</span>
         </div>
       </div>
     </footer>
