@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, Sparkles, BookOpen, Compass, Users, Settings, LogOut } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
@@ -35,7 +34,6 @@ export function AppSidebar() {
           <span className="text-foreground">Krea</span>
           <span className="text-muted-foreground font-light">Prompts</span>
         </Link>
-        <ThemeToggle />
       </div>
 
       <nav className="flex-1 space-y-1">
