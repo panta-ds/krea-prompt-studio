@@ -35,13 +35,13 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => 
               link.isExternal ? (
-                <Link
+                <a
                   key={link.href}
-                  to={link.href}
+                  href={link.href}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
                 >
                   {link.label}
-                </Link>
+                </a>
               ) : (
                 <a
                   key={link.href}
@@ -109,14 +109,14 @@ export function Navbar() {
             <div className="flex flex-col space-y-4">
               {isLanding && navLinks.map((link) => 
                 link.isExternal ? (
-                  <Link
+                  <a
                     key={link.href}
-                    to={link.href}
+                    href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="text-lg text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 ) : (
                   <a
                     key={link.href}
