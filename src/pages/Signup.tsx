@@ -133,7 +133,7 @@ export default function SignupPage() {
                 className="mt-1 border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary" 
               />
               <Label htmlFor="terms" className="text-xs text-muted-foreground leading-relaxed cursor-pointer">
-                Concordo com os Termos de Uso e Política de Privacidade
+                Concordo com os <Link to="/terms-of-service" className="text-primary hover:underline">Termos de Uso</Link> e <Link to="/privacy-policy" className="text-primary hover:underline">Política de Privacidade</Link>
               </Label>
             </div>
             <Button variant="glass" className="w-full h-11" type="submit" disabled={loading}>
