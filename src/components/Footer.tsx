@@ -1,12 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function Footer() {
+  const location = useLocation();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   return (
     <footer className="border-t border-border bg-background py-16">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
-            <Link to="/" className="font-heading text-xl font-semibold tracking-tight hover:opacity-80 transition-opacity">
+            <Link 
+              to="/" 
+              onClick={handleLogoClick}
+              className="font-heading text-xl font-semibold tracking-tight hover:opacity-80 transition-opacity"
+            >
               <span className="text-foreground">Krea</span>
               <span className="text-muted-foreground font-light">Prompts</span>
             </Link>

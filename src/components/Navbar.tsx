@@ -12,9 +12,15 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const location = useLocation();
-  const isLanding = location.pathname === "/";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <>
@@ -25,7 +31,11 @@ export function Navbar() {
         className="fixed top-4 inset-x-0 z-50 flex justify-center w-full px-4 md:px-6"
       >
       <nav className="glass flex w-full max-w-5xl h-14 items-center justify-between px-4 sm:px-6 rounded-2xl mx-auto">
-        <Link to="/" className="font-heading text-lg font-semibold tracking-tight">
+        <Link 
+          to="/" 
+          onClick={handleLogoClick}
+          className="font-heading text-lg font-semibold tracking-tight"
+        >
           <span className="text-foreground font-semibold">Krea</span>
           <span className="text-muted-foreground font-light">Prompts</span>
         </Link>
