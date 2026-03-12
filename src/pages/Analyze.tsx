@@ -1,13 +1,21 @@
-import { useState, useCallback, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
-import { mockJsonPrompt } from "@/lib/mockData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Copy, FileText, BookmarkPlus, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { analyzeImage } from "@/lib/gemini";
+
+interface PromptResult {
+  subject: string;
+  style: string;
+  lighting: string;
+  colors: string[];
+  composition: string;
+  mood: string;
+  quality_tags: string[];
+}
 
 export default function AnalyzePage() {
   const navigate = useNavigate();
@@ -24,7 +32,7 @@ export default function AnalyzePage() {
 
   const [image, setImage] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
-  const [result, setResult] = useState<typeof mockJsonPrompt | null>(null);
+  const [result, setResult] = useState<PromptResult | null>(null);
   const [language, setLanguage] = useState("PT");
   const [detailLevel, setDetailLevel] = useState(1);
 
@@ -50,8 +58,11 @@ export default function AnalyzePage() {
         setImage(base64Image);
         
         try {
+          console.log("Iniciando análise real via Gemini API...");
           // Chamada REAL para o Gemini
           const geminiResult = await analyzeImage(base64Image, language);
+          console.log("Resultado da análise Gemini:", geminiResult);
+          
           setResult(geminiResult);
           setAnalyzing(false);
 
