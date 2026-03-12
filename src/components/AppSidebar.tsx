@@ -1,6 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, Sparkles, BookOpen, Compass, Users, Settings, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
@@ -13,6 +15,18 @@ const navItems = [
 
 export function AppSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast.success("Saiu com sucesso!");
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao sair.");
+    }
+  };
 
   return (
     <aside className="hidden lg:flex flex-col w-64 min-h-screen glass-subtle p-6 border-r border-border">
@@ -44,13 +58,13 @@ export function AppSidebar() {
         })}
       </nav>
 
-      <Link
-        to="/"
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
+      <button
+        onClick={handleLogout}
+        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200 w-full text-left"
       >
         <LogOut className="w-4 h-4" />
         Sair
-      </Link>
+      </button>
     </aside>
   );
-}
+}

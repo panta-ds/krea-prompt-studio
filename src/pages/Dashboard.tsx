@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AppSidebar } from "@/components/AppSidebar";
 import { mockAnalyses } from "@/lib/mockData";
 import { motion } from "framer-motion";
 import { Upload, BarChart3, BookOpen, Zap, Copy } from "lucide-react";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 16 },
@@ -13,6 +15,18 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/login");
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
   const stats = [
     { icon: BarChart3, label: "Análises este mês", value: "12" },
     { icon: BookOpen, label: "Prompts salvos", value: "47" },

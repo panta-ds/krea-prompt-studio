@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Input } from "@/components/ui/input";
 import { mockGalleryItems } from "@/lib/mockData";
 import { motion } from "framer-motion";
 import { Search, Copy } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabase";
 
 const filters = ["Tendências", "Recentes", "Mais copiados"];
 
 export default function ExplorePage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/login");
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState(0);
 

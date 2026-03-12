@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,9 +6,22 @@ import { mockAnalyses } from "@/lib/mockData";
 import { motion } from "framer-motion";
 import { Search, Copy, Trash2, Eye, BookOpen } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabase";
 
 export default function LibraryPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/login");
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
   const [search, setSearch] = useState("");
   const items = mockAnalyses.filter((a) =>
     a.title.toLowerCase().includes(search.toLowerCase())
