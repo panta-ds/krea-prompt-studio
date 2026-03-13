@@ -184,7 +184,8 @@ export default function AnalyzePage() {
           <div className="glass-code overflow-hidden flex flex-col min-h-[400px]">
             <div className="flex items-center gap-2 px-6 py-4 border-b border-border">
               <div className="w-2 h-2 rounded-full bg-primary" />
-              <span className="font-mono text-xs text-muted-foreground">prompt.json</span>
+              <span className="font-mono text-xs text-muted-foreground grow">prompt.json</span>
+              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.2</span>
             </div>
             <div className="flex-1 p-6 overflow-auto">
               <AnimatePresence mode="wait">
