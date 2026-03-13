@@ -1,3 +1,7 @@
+import { useState, useCallback, useEffect } from "react";
+import { AppSidebar } from "@/components/AppSidebar";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Copy, FileText, BookmarkPlus, Share2, X, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
