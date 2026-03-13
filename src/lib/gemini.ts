@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 
 export async function analyzeImage(base64Image: string, language: string = "PT") {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
     // Detectar o mimeType dinamicamente
     const mimeMatch = base64Image.match(/^data:(image\/[a-zA-Z+]+);base64,/);
