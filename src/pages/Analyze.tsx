@@ -1,8 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
-import { AppSidebar } from "@/components/AppSidebar";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
-import { Upload, Copy, FileText, BookmarkPlus, Share2 } from "lucide-react";
+import { Upload, Copy, FileText, BookmarkPlus, Share2, X, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
@@ -48,6 +44,12 @@ export default function AnalyzePage() {
     if (file) processFile(file);
   };
 
+  const removeImage = () => {
+    setImage(null);
+    setResult(null);
+    setAnalyzing(false);
+  };
+
   const processFile = async (file: File) => {
     try {
       setAnalyzing(true);
@@ -83,12 +85,12 @@ export default function AnalyzePage() {
               console.error("Erro ao salvar análise:", error.message);
               toast.error("Análise concluída, mas erro ao salvar na biblioteca.");
             } else {
-              toast.success("Análise concluída com IA!");
+              toast.success("Análise concluída com sucesso!");
             }
           }
         } catch (apiError: any) {
-          console.error("Erro na API Gemini:", apiError);
-          toast.error("Erro na análise via IA. Tente novamente.");
+          console.error("Erro detalhado na API Gemini:", apiError);
+          toast.error(`Erro na IA: ${apiError.message || "Tente novamente"}`);
           setAnalyzing(false);
         }
       };
@@ -159,7 +161,7 @@ export default function AnalyzePage() {
             onDragOver={(e) => e.preventDefault()}
           >
             {image ? (
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full group">
                 <img src={image} alt="Imagem enviada" className={`w-full h-full object-contain transition-all duration-1000 ${analyzing ? "grayscale" : ""}`} />
                 {analyzing && (
                   <motion.div
@@ -169,6 +171,18 @@ export default function AnalyzePage() {
                     transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                   />
                 )}
+                {!analyzing && (
+                  <div className="absolute top-4 right-4 flex gap-2">
+                    <Button variant="glass" size="icon" className="w-10 h-10 rounded-full" onClick={removeImage}>
+                      <X className="w-5 h-5" />
+                    </Button>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                  <div className="bg-background/80 px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-2">
+                    <RefreshCw className="w-4 h-4" /> Arraste outra para substituir
+                  </div>
+                </div>
               </div>
             ) : (
               <label className="flex flex-col items-center cursor-pointer p-12">
@@ -185,7 +199,7 @@ export default function AnalyzePage() {
             <div className="flex items-center gap-2 px-6 py-4 border-b border-border">
               <div className="w-2 h-2 rounded-full bg-primary" />
               <span className="font-mono text-xs text-muted-foreground grow">prompt.json</span>
-              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.2</span>
+              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.3</span>
             </div>
             <div className="flex-1 p-6 overflow-auto">
               <AnimatePresence mode="wait">
