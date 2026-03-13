@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -36,6 +36,7 @@ export default function AnalyzePage() {
   const [result, setResult] = useState<PromptResult | null>(null);
   const [language, setLanguage] = useState("PT");
   const [detailLevel, setDetailLevel] = useState(1);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -165,7 +166,10 @@ export default function AnalyzePage() {
             onDragOver={(e) => e.preventDefault()}
           >
             {image ? (
-              <div className="relative w-full h-full group">
+              <div 
+                className="relative w-full h-full group cursor-pointer" 
+                onClick={() => !analyzing && fileInputRef.current?.click()}
+              >
                 <img src={image} alt="Imagem enviada" className={`w-full h-full object-contain transition-all duration-1000 ${analyzing ? "grayscale" : ""}`} />
                 {analyzing && (
                   <motion.div
@@ -177,14 +181,22 @@ export default function AnalyzePage() {
                 )}
                 {!analyzing && (
                   <div className="absolute top-4 right-4 flex gap-2">
-                    <Button variant="glass" size="icon" className="w-10 h-10 rounded-full" onClick={removeImage}>
+                    <Button 
+                      variant="glass" 
+                      size="icon" 
+                      className="w-10 h-10 rounded-full" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeImage();
+                      }}
+                    >
                       <X className="w-5 h-5" />
                     </Button>
                   </div>
                 )}
                 <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
                   <div className="bg-background/80 px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-2">
-                    <RefreshCw className="w-4 h-4" /> Arraste outra para substituir
+                    <RefreshCw className="w-4 h-4" /> Clique ou arraste para substituir
                   </div>
                 </div>
               </div>
@@ -193,7 +205,13 @@ export default function AnalyzePage() {
                 <Upload className="w-12 h-12 text-muted-foreground mb-4" />
                 <p className="text-foreground font-medium text-sm">Arraste sua imagem aqui</p>
                 <p className="text-xs text-muted-foreground mt-1">ou clique para selecionar</p>
-                <input type="file" accept="image/*" className="hidden" onChange={handleFileSelect} />
+                <input 
+                  type="file" 
+                  ref={fileInputRef}
+                  accept="image/*" 
+                  className="hidden" 
+                  onChange={handleFileSelect} 
+                />
               </label>
             )}
           </div>
@@ -203,7 +221,7 @@ export default function AnalyzePage() {
             <div className="flex items-center gap-2 px-6 py-4 border-b border-border">
               <div className="w-2 h-2 rounded-full bg-primary" />
               <span className="font-mono text-xs text-muted-foreground grow">prompt.json</span>
-              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.3.2</span>
+              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.4.0</span>
             </div>
             <div className="flex-1 p-6 overflow-auto">
               <AnimatePresence mode="wait">
