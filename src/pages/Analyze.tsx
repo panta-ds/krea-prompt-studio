@@ -201,19 +201,22 @@ export default function AnalyzePage() {
                 </div>
               </div>
             ) : (
-              <label className="flex flex-col items-center cursor-pointer p-12">
+              <label 
+                className="flex flex-col items-center cursor-pointer p-12"
+                onClick={() => fileInputRef.current?.click()}
+              >
                 <Upload className="w-12 h-12 text-muted-foreground mb-4" />
                 <p className="text-foreground font-medium text-sm">Arraste sua imagem aqui</p>
                 <p className="text-xs text-muted-foreground mt-1">ou clique para selecionar</p>
-                <input 
-                  type="file" 
-                  ref={fileInputRef}
-                  accept="image/*" 
-                  className="hidden" 
-                  onChange={handleFileSelect} 
-                />
               </label>
             )}
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              accept="image/*" 
+              className="hidden" 
+              onChange={handleFileSelect} 
+            />
           </div>
 
           {/* JSON Output */}
@@ -221,7 +224,7 @@ export default function AnalyzePage() {
             <div className="flex items-center gap-2 px-6 py-4 border-b border-border">
               <div className="w-2 h-2 rounded-full bg-primary" />
               <span className="font-mono text-xs text-muted-foreground grow">prompt.json</span>
-              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.4.1</span>
+              <span className="text-[10px] text-muted-foreground/40 font-mono">v1.4.2</span>
             </div>
             <div className="flex-1 p-6 overflow-auto">
               <AnimatePresence mode="wait">
